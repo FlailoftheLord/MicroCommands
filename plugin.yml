@@ -1,0 +1,6 @@
+main: me.flail.MicroCommands.MicroCommands
+name: MicroCommands
+version: 1.0.0
+api-version: 1.13
+author: FlailoftheLord
+description: Every essential command your server will ever need :>
