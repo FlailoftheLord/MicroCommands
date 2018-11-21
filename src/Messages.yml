@@ -1,0 +1,36 @@
+# Here is the complete messages file for the entire MicroCommands plugin.
+# If you find any missing messages, please let me know on SpigotMC, Discord, or GitHub.
+# Spigot:  https://www.spigotmc.org/members/flailofthelord.565303
+# Discord:  https://discord.gg/wuxW5PS
+# GitHub:  https://github.com/FlailoftheLord
+#  
+# = = = = = | Placeholders | = = = = = #
+# you can use the following placeholders for each category of messages
+# 
+# Category 1: Plain messages, things like join, leave, death, respawn... ect.
+#   you can use the following placeholders in these messages
+#      $target$  -- the subject of that action
+#      $target-x$  -- the $target$'s current 'X' location
+#      $target-y$  -- the $target$'s current 'Y' location
+#      $target-z$  -- the $target$'s current 'Z' location
+#      $target-world$  -- the $target$'s current world
+#      $target-nickname$ - $displayname$ -- the $target$'s nickname/displayname
+#      $target-health$  -- the $target$'s health level (1 = 1/2 heart)
+#      $prefix$  -- the plugin prefix defined below
+#      $error$  -- the plugin error prefix defined below
+#
+# Category 2: Command messages, for messages sent as a result of a command, like /teleport, /gamemode, /home... ect.
+#   you can use the following placeholders in addition to the ones listed above
+#      $sender$  -- the sender of the command
+#      $sender-location-x$  -- the $sender$'s current 'X' location
+#      $sender-location-y$  -- the $sender$'s current 'Y' location
+#      $sender-location-z$  -- the $sender$'s current 'Z' location
+#      $sender-world$  -- the $sender$'s current world
+#      $sender-health$  -- the $sender$'s current health (1 = 1/2 heart)
+#      $sender-nickname$  -- the $sender$'s nickname/displayname
+#      $command$  -- the name of the command used
+#      $permission$  -- shows the permission node of the command used
+#
+#  And finally, if you have PlaceholderAPI installed, you can use any Placeholder from there in ANY chat message :>
+#  You can download PlaceholderAPI from here:  
+# = = = = = | + + + + + | = = = = = #

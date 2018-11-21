@@ -3,9 +3,9 @@
 #                                                                  #
 #             MicroCommands by FlailoftheLord.                     #
 #         -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-                  #
-#   for questions please pm me on discord at FlailoftheLord#6842   #
-#          Join my discord server for faster support:              #
-#                https://discord.gg/wuxW5PS                        #
+#           If you have any Questions or feedback                  #
+#              Join my discord server here:                        #
+#               https://discord.gg/wuxW5PS                         #
 #   ______               __        _____                           #
 #   |       |           /  \         |        |                    #
 #   |__     |          /____\        |        |                    #
@@ -20,4 +20,17 @@
 # But i promise i shall make your experience with this plugin truly unique!!
 # thanks for trying it out and i hope you enjoy!
 #   If you have any suggestions for improvement, or any feedback...
-#  just pm me on Discord (linked above) or join my discord server! (linked above)
+#  just join my discord server! (linked above) or pm me on SpigotMC.
+
+
+# Custom join and leave messages
+# for multiple lines simply format it like this ->
+#  JoinMessage: |-
+#    &cfirst line hello....!
+#     &asecon line...
+#     &ethird line! woot woot!
+# set to false to disable join and leave messages
+JoinLeaveMessages: true
+JoinMessage: "$prefix$ &e$player$ &7returned!"
+LeaveMessage: "$prefix$ &e$player$ &cleft the game."
+FirstJoinMessage: "$prefix$ &a$player$ &3has joined for the first time, welcome him!"

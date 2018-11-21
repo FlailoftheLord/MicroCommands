@@ -4,20 +4,29 @@
 package me.flail.MicroCommands;
 
 import java.io.File;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import me.flail.MicroCommands.Events.PlayerJoin;
 
 public class MicroCommands extends JavaPlugin {
 
 	public ConsoleCommandSender console = Bukkit.getConsoleSender();
+
+	public Server server = this.getServer();
+
+	private PluginManager plugin = server.getPluginManager();
 
 	public Logger logger = Bukkit.getLogger();
 
@@ -57,7 +66,12 @@ public class MicroCommands extends JavaPlugin {
 		userDataFolder();
 		loadMessages();
 
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			loadPlayer(p);
+		}
+
 		// Register Events
+		registerEvents();
 
 		// Register Commands
 
@@ -68,6 +82,34 @@ public class MicroCommands extends JavaPlugin {
 	@Override
 	public void onDisable() {
 
+	}
+
+	private void registerEvents() {
+
+		plugin.registerEvents(new PlayerJoin(), this);
+
+	}
+
+	private void registerCommands() {
+		Set<String> serverCommands = server.getCommandAliases().keySet();
+		Set<String> commands = this.getDescription().getCommands().keySet();
+
+		for (String cmdAlias : serverCommands) {
+
+			for (String cmd : commands) {
+
+				if (!cmdAlias.equalsIgnoreCase(cmd)) {
+					switch (cmd.toLowerCase()) {
+
+					case "microcommands":
+						getCommand(cmd).setExecutor(new MainCommand());
+
+					}
+				}
+
+			}
+
+		}
 	}
 
 	private void userDataFolder() {
@@ -122,6 +164,25 @@ public class MicroCommands extends JavaPlugin {
 
 	}
 
+	public FileConfiguration getPlayer(Player player) {
+
+		String pUuid = player.getUniqueId().toString();
+		File pFile = new File(path + dirName, pUuid + ".yml");
+		FileConfiguration pConfig = new YamlConfiguration();
+
+		if (!pFile.exists()) {
+			loadPlayer(player);
+		}
+
+		try {
+			pConfig.save(pFile);
+		} catch (Exception e) {
+			logger.log(Level.WARNING,
+					tools.chat("Could not save player data file for " + player.getName() + " (" + pUuid + ")"));
+		}
+		return pConfig;
+	}
+
 	public void loadPlayer(Player player) {
 		String pName = player.getName();
 		String puid = player.getUniqueId().toString();
@@ -130,7 +191,12 @@ public class MicroCommands extends JavaPlugin {
 
 		if (!playerFile.exists()) {
 			playerFile.getParentFile().mkdirs();
-			saveResource(pUuid, false);
+			try {
+				playerFile.createNewFile();
+			} catch (Exception e) {
+				logger.log(Level.WARNING,
+						tools.chat("Could not create player data file for " + pName + " (" + puid + ")"));
+			}
 		}
 
 		playerConfig = new YamlConfiguration();
@@ -139,6 +205,10 @@ public class MicroCommands extends JavaPlugin {
 		} catch (Exception e) {
 			logger.log(Level.WARNING, tools.chat("Could not load player data file for " + pName + " (" + puid + ")"));
 		}
+
+	}
+
+	public void savePlayer(Player player) {
 
 	}
 

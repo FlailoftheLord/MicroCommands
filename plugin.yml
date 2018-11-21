@@ -4,3 +4,42 @@ version: 1.0.0
 api-version: 1.13
 author: FlailoftheLord
 description: Every essential command your server will ever need :>
+soft-depend: [Vault, PlaceholderAPI, ProtocolLib]
+
+Commands:
+  
+  microcommands:
+    description: main command for the plugin
+    usage: /microcommands [help:reload]
+    aliases: [mcc, mcommands, microcmd]
+    
+  
+  
+Permissions:
+  
+  microcommands.command:
+    description: use the main /microcommands command
+    default: op
+    
+  microcommands.*:
+    description: wildcard permission for every microcommands' command
+    default: op
+    children:
+      microcommands.fly: true
+      
+      
+  
+  
+  microcommands.fly:
+    description: permission for fly command
+    default: op
+    children:
+      microcommands.fly.*: false    
+
+  microcommands.fly.*:
+    description: permission for fly command
+    default: op
+    children:
+      microcommands.fly.safelogin: true
+      microcommands.fly.self: true
+      microcommands.fly.others: true
