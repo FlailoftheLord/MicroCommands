@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import me.flail.MicroCommands.MicroCommands;
 import me.flail.MicroCommands.Tools;
 
-public class PlayerLeave implements Listener {
+public class PlayerQuit implements Listener {
 
 	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
 

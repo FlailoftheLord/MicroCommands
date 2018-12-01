@@ -23,6 +23,13 @@
 #  just join my discord server! (linked above) or pm me on SpigotMC.
 
 
+# Command override list
+# These commands will always override other plugins
+# for example if another plugin uses the command /fly, add it to this list to force the server to use MicroCommands.
+CommandBlacklist:
+# - fly
+- msg
+
 # Custom join and leave messages
 # for multiple lines simply format it like this ->
 #  JoinMessage: |-

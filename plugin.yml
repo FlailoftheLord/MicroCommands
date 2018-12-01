@@ -11,9 +11,27 @@ Commands:
   microcommands:
     description: main command for the plugin
     usage: /microcommands [help:reload]
-    aliases: [mcc, mcommands, microcmd]
+    aliases: [mcc, microcmd, mmcc, mmicrocmd, mmicrocommands]
+    
+  me:
+    description: replaces the default minecraft /me
+    usage: /action <message>
+    aliases: [action, maction, mme]
+    
+  fly:
+    description: fly command
+    usage: /fly [player] [on/off]
+    aliases: [mfly]
+    
+  teleport:
+    description: teleport command
+    usage: /teleport <location:player> [location:player]
+    aliases: [tp, tpo, tpa, tpaccept, tpdeny, tpacancel, tptoggle, toggletp, mtp, mtpo, mtpa, mtpdeny, mtpaccept, mtpacancel, mtoggletp, mtptoggle]
     
   
+  mnms:
+    description: lel
+    usage: /mnms
   
 Permissions:
   
@@ -21,25 +39,16 @@ Permissions:
     description: use the main /microcommands command
     default: op
     
-  microcommands.*:
-    description: wildcard permission for every microcommands' command
-    default: op
+  microcommands.op:
+    description: every single permission, acts as a wildcard permission for MicroCommands
+    default: false
     children:
+      microcommands.command: true
       microcommands.fly: true
+      microcommands.bypass.all: true
+      microcommands.exempt.all: true
       
       
-  
-  
-  microcommands.fly:
-    description: permission for fly command
-    default: op
-    children:
-      microcommands.fly.*: false    
-
-  microcommands.fly.*:
-    description: permission for fly command
-    default: op
-    children:
-      microcommands.fly.safelogin: true
-      microcommands.fly.self: true
-      microcommands.fly.others: true
+      
+      
+      

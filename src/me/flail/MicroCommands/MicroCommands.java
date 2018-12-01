@@ -4,13 +4,14 @@
 package me.flail.MicroCommands;
 
 import java.io.File;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,6 +20,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.flail.MicroCommands.Events.PlayerJoin;
+import me.flail.MicroCommands.Events.PlayerQuit;
 
 public class MicroCommands extends JavaPlugin {
 
@@ -27,6 +29,7 @@ public class MicroCommands extends JavaPlugin {
 	public Server server = this.getServer();
 
 	private PluginManager plugin = server.getPluginManager();
+	private CommandProcessor cmdControl;
 
 	public Logger logger = Bukkit.getLogger();
 
@@ -74,6 +77,7 @@ public class MicroCommands extends JavaPlugin {
 		registerEvents();
 
 		// Register Commands
+		registerCommands();
 
 		// Spam the console with useless shit. :>
 		consoleSpam();
@@ -87,29 +91,18 @@ public class MicroCommands extends JavaPlugin {
 	private void registerEvents() {
 
 		plugin.registerEvents(new PlayerJoin(), this);
+		plugin.registerEvents(new PlayerQuit(), this);
 
 	}
 
 	private void registerCommands() {
-		Set<String> serverCommands = server.getCommandAliases().keySet();
-		Set<String> commands = this.getDescription().getCommands().keySet();
 
-		for (String cmdAlias : serverCommands) {
+	}
 
-			for (String cmd : commands) {
-
-				if (!cmdAlias.equalsIgnoreCase(cmd)) {
-					switch (cmd.toLowerCase()) {
-
-					case "microcommands":
-						getCommand(cmd).setExecutor(new MainCommand());
-
-					}
-				}
-
-			}
-
-		}
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		cmdControl.processCommand(sender, label, args);
+		return true;
 	}
 
 	private void userDataFolder() {

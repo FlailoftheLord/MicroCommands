@@ -33,7 +33,7 @@ public class PlayerJoin implements Listener {
 		playerData.set("Name", pName);
 		playerData.set("IpAddress", playerIp);
 
-		if (player.hasPermission("microcommands.fly.safefly")) {
+		if (player.hasPermission("microcommands.fly.self") || player.hasPermission("microcommands.fly")) {
 
 			player.setAllowFlight(true);
 

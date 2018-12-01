@@ -9,13 +9,13 @@
 # 
 # Category 1: Plain messages, things like join, leave, death, respawn... ect.
 #   you can use the following placeholders in these messages
-#      $player$  -- the subject of that action
-#      $player-location-x$  -- the $player$'s current 'X' location
-#      $player-location-y$  -- the $player$'s current 'Y' location
-#      $player-location-z$  -- the $player$'s current 'Z' location
-#      $player-world$  -- the $player$'s current world
-#      $player-nickname$  -- the $player$'s nickname/displayname
-#      $player-health$  -- the $player$'s health level (1 = 1/2 heart)
+#      $target$  -- the subject of that action
+#      $target-x$  -- the $target$'s current 'X' location
+#      $target-y$  -- the $target$'s current 'Y' location
+#      $target-z$  -- the $target$'s current 'Z' location
+#      $target-world$  -- the $target$'s current world
+#      $target-nickname$ - $displayname$ -- the $target$'s nickname/displayname
+#      $target-health$  -- the $target$'s health level (1 = 1/2 heart)
 #      $prefix$  -- the plugin prefix defined below
 #      $error$  -- the plugin error prefix defined below
 #
@@ -34,3 +34,30 @@
 #  And finally, if you have PlaceholderAPI installed, you can use any Placeholder from there in ANY chat message :>
 #  You can download PlaceholderAPI from here:  
 # = = = = = | + + + + + | = = = = = #
+
+#prefix for all messages
+Prefix: "&8[&2&lMCC&8]"
+Error: "4&lError&6:"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
