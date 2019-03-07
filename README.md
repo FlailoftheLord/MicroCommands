@@ -3,6 +3,7 @@
 In order to build this plugin properly, you must have the following dependencies added to your buildpath:
 
   Make Sure you're building this on **Spigot 1.13.2**
+  
   NOTE: this is NOT a maven project, maven is annoyingly hard to use, and i prefer using classic style as i'm more comfortable with it.
 
   - ProtocolLib
