@@ -1,37 +1,37 @@
-main: me.flail.MicroCommands.MicroCommands
+# Toot ur horn... lol
 name: MicroCommands
-version: 1.0.0
-api-version: 1.13
+prefix: M.C.C
 author: FlailoftheLord
 description: Every essential command your server will ever need :>
-soft-depend: [Vault, PlaceholderAPI, ProtocolLib]
 
-Commands:
+# Me mum always told me i could do great things... MicroCommands is great?? o.O
+main: me.flail.microcommands.MicroCommands
+version: 1.0.0
+api-version: 1.13
+load: STARTUP
+
+# Just bcuz
+soft-depend:
+- Vault
+- PlaceholderAPI
+- ProtocolLib
+loadbefore: 
+- SlashPlayer
+- Essentials
+
+commands:
   
   microcommands:
     description: main command for the plugin
     usage: /microcommands [help:reload]
-    aliases: [mcc, microcmd, mmcc, mmicrocmd, mmicrocommands]
-    
-  me:
-    description: replaces the default minecraft /me
-    usage: /action <message>
-    aliases: [action, maction, mme]
-    
-  fly:
-    description: fly command
-    usage: /fly [player] [on/off]
-    aliases: [mfly]
-    
-  teleport:
-    description: teleport command
-    usage: /teleport <location:player> [location:player]
-    aliases: [tp, tpo, tpa, tpaccept, tpdeny, tpacancel, tptoggle, toggletp, mtp, mtpo, mtpa, mtpdeny, mtpaccept, mtpacancel, mtoggletp, mtptoggle]
-    
+    aliases: [mcc, mmcc, microcommands, mmicrocommands]
   
   mnms:
     description: lel
     usage: /mnms
+  
+  fly:
+    description: let me fly!!
   
 Permissions:
   
@@ -47,6 +47,9 @@ Permissions:
       microcommands.fly: true
       microcommands.bypass.all: true
       microcommands.exempt.all: true
+      microcommands.chat.color: true
+      microcommands.chat.format: true
+      microcommands.chat.magic: true
       
       
       

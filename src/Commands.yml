@@ -1,0 +1,13 @@
+Commands:
+
+  fly:
+    aliases:
+    - mcfly
+    - mccfly
+    
+  home:
+    aliases:
+    - sethome
+    - delhome
+    - hometp
+    - homes

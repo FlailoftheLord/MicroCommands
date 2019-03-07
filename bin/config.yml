@@ -27,10 +27,32 @@
 # for multiple lines simply format it like this ->
 #  JoinMessage: |-
 #    &cfirst line hello....!
-#     &asecon line...
-#     &ethird line! woot woot!
+#    &asecon line...
+#    &ethird line! woot woot!
 # set to false to disable join and leave messages
 JoinLeaveMessages: true
 JoinMessage: "$prefix$ &e$player$ &7returned!"
 LeaveMessage: "$prefix$ &e$player$ &cleft the game."
 FirstJoinMessage: "$prefix$ &a$player$ &3has joined for the first time, welcome him!"
+
+ChatFormat: "&f$name$ &8» &7&l$message$"
+
+# Command override list
+# These commands will always override other plugins
+# for example if another plugin uses the command /fly, add it to this list to force the server to use MicroCommands.
+CommandBlacklist:
+- msg
+
+# List all commands here that you don't want MicroCommands to be able to handle.
+DisabledCommands:
+- spawn
+
+
+
+
+
+
+
+
+
+

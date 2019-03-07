@@ -1,77 +1,73 @@
 /*
  * <Copyright goes here>
  */
-package me.flail.MicroCommands;
+package me.flail.microcommands;
 
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.flail.MicroCommands.Events.PlayerJoin;
-import me.flail.MicroCommands.Events.PlayerQuit;
+import me.flail.microcommands.mcc.commands.CommandProcessor;
+import me.flail.microcommands.mcc.entity.MobTags.InvisyTag;
+import me.flail.microcommands.mcc.events.ChatListener;
+import me.flail.microcommands.mcc.events.PlayerJoin;
+import me.flail.microcommands.mcc.events.PlayerQuit;
+import me.flail.microcommands.mcc.io.FileManager;
+import me.flail.microcommands.mcc.tools.Tools;
 
 public class MicroCommands extends JavaPlugin {
 
-	public ConsoleCommandSender console = Bukkit.getConsoleSender();
+	public Server server;
+	public ConsoleCommandSender console;
 
-	public Server server = this.getServer();
+	public FileManager fileManager;
+	public Tools tools;
+	public Logger logger;
 
-	private PluginManager plugin = server.getPluginManager();
-	private CommandProcessor cmdControl;
+	public PluginManager plugin;
+	public CommandProcessor cmdControl;
 
-	public Logger logger = Bukkit.getLogger();
+	public Map<UUID, Player> playerDatabase = new HashMap<>();
+	public Map<String, FileConfiguration> playerFile = new HashMap<>();
+	public List<Player> vanishedPlayers = new ArrayList<>();
 
-	public Tools tools = new Tools(this);
-
-	private FileConfiguration messagesConfig;
-	private File messagesFile;
-
-	private File playerFile;
-	private FileConfiguration playerConfig;
-
-	public String dirName = "PlayerData";
-	public String path = "plugins/MicroCommands/";
+	public String path = "plugins/MicroCommands/PlayerData/";
 
 	public String version = this.getDescription().getVersion();
 	public String serverVersion = this.getServer().getVersion();
-	public String serverName = getServer().getServerName();
+	public String serverName;
+	public String pluginPrefix = "[" + getDescription().getPrefix() + "] ";
 
-	protected void consoleSpam() {
+	/**
+	 * Main Plugin instance! ;p Proudly & clumsily coded by a wild Flail.
+	 */
+	public static MicroCommands plugin() {
+		return getPlugin(MicroCommands.class);
+	}
 
-		console.sendMessage(" ");
-		console.sendMessage(tools.chat(" &aMicroCommands &7v" + version));
-		console.sendMessage(tools.chat("   &2by FlailoftheLord."));
-		console.sendMessage(tools.chat("  &eeverything your server needs!"));
-		console.sendMessage(" ");
-		logger.log(Level.INFO, "MicroCommands running under " + serverVersion);
-		logger.log(Level.INFO, "ServerName: " + serverName);
-		console.sendMessage(" ");
+	@Override
+	public void onLoad() {
 
 	}
 
 	@Override
 	public void onEnable() {
 
-		// Load up config and other resource files
-		saveDefaultConfig();
-		userDataFolder();
-		loadMessages();
-
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			loadPlayer(p);
-		}
+		// load up the rest of the files and generate player files.
+		console.sendMessage(pluginPrefix + " loaded messages files");
 
 		// Register Events
 		registerEvents();
@@ -80,7 +76,8 @@ public class MicroCommands extends JavaPlugin {
 		registerCommands();
 
 		// Spam the console with useless shit. :>
-		consoleSpam();
+		tools.consoleSpam();
+
 	}
 
 	@Override
@@ -88,121 +85,35 @@ public class MicroCommands extends JavaPlugin {
 
 	}
 
-	private void registerEvents() {
+	public void registerEvents() {
 
 		plugin.registerEvents(new PlayerJoin(), this);
 		plugin.registerEvents(new PlayerQuit(), this);
 
+		plugin.registerEvents(new InvisyTag(), this);
+
+		plugin.registerEvents(new ChatListener(), this);
+
 	}
 
-	private void registerCommands() {
-
+	public void registerCommands() {
+		Set<String> commands = this.getDescription().getCommands().keySet();
+		for (String cmd : commands) {
+			getCommand(cmd).setExecutor(this);
+		}
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		cmdControl.processCommand(sender, label, args);
-		return true;
+
+		cmdControl = new CommandProcessor(this);
+		Command cmd = command;
+
+		return cmdControl.processCommand(sender, cmd, label, args);
 	}
 
-	private void userDataFolder() {
-
-		File PlayerDataFolder = new File(path + dirName);
-
-		if (!PlayerDataFolder.exists()) {
-			boolean makeFolder = new File(path + dirName).mkdirs();
-
-			if (!makeFolder) {
-				console.sendMessage(ChatColor.RED + "Could not generate PlayerData folder in path: */" + path);
-			}
-		}
-
-	}
-
-	public FileConfiguration getMessages() {
-		if (messagesConfig == null) {
-			loadMessages();
-		}
-		return messagesConfig;
-	}
-
-	private void loadMessages() {
-		String msgFile = "Messages.yml";
-		messagesFile = new File(getDataFolder(), msgFile);
-
-		if (!messagesFile.exists()) {
-			messagesFile.getParentFile().mkdirs();
-			saveResource(msgFile, false);
-		}
-
-		messagesConfig = new YamlConfiguration();
-		try {
-			messagesConfig.save(messagesFile);
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "Could not load file " + msgFile, e);
-		}
-
-	}
-
-	public void saveMessages() {
-		if (!messagesFile.exists() || (messagesFile == null)) {
-			loadMessages();
-		}
-
-		try {
-			getMessages().save(messagesFile);
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "Could not save file Messages.yml", e);
-		}
-
-	}
-
-	public FileConfiguration getPlayer(Player player) {
-
-		String pUuid = player.getUniqueId().toString();
-		File pFile = new File(path + dirName, pUuid + ".yml");
-		FileConfiguration pConfig = new YamlConfiguration();
-
-		if (!pFile.exists()) {
-			loadPlayer(player);
-		}
-
-		try {
-			pConfig.save(pFile);
-		} catch (Exception e) {
-			logger.log(Level.WARNING,
-					tools.chat("Could not save player data file for " + player.getName() + " (" + pUuid + ")"));
-		}
-		return pConfig;
-	}
-
-	public void loadPlayer(Player player) {
-		String pName = player.getName();
-		String puid = player.getUniqueId().toString();
-		String pUuid = player.getUniqueId().toString() + ".yml";
-		playerFile = new File(path + dirName, pUuid);
-
-		if (!playerFile.exists()) {
-			playerFile.getParentFile().mkdirs();
-			try {
-				playerFile.createNewFile();
-			} catch (Exception e) {
-				logger.log(Level.WARNING,
-						tools.chat("Could not create player data file for " + pName + " (" + puid + ")"));
-			}
-		}
-
-		playerConfig = new YamlConfiguration();
-		try {
-			playerConfig.save(playerFile);
-		} catch (Exception e) {
-			logger.log(Level.WARNING, tools.chat("Could not load player data file for " + pName + " (" + puid + ")"));
-		}
-
-	}
-
-	public void savePlayer(Player player) {
-
+	public Collection<Player> getOnlinePlayers() {
+		return playerDatabase.values();
 	}
 
 }
