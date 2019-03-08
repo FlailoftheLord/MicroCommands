@@ -8,16 +8,15 @@ import java.util.Calendar;
 
 import org.bukkit.ChatColor;
 
-import me.flail.microcommands.MicroCommands;
 import me.flail.microcommands.io.Logger;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.tools.TimeUtils;
 import me.flail.microcommands.mcc.tools.TimeUtils.Time;
+import me.flail.microcommands.mcc.tools.Tools;
 
 public class ILogger implements Logger {
-	MicroCommands plugin = MicroCommands.plugin();
-
-	public ILogger() {
-	}
+	MicroCommands plugin = MicroCommands.instance;
+	Tools tools = new Tools();
 
 	@Override
 	public boolean log(String message, LogType type) {
@@ -25,14 +24,14 @@ public class ILogger implements Logger {
 		switch (type) {
 
 		case FILE:
-			this.logToFile(plugin.tools.chat.chat(message));
+			this.logToFile(tools.chat.chat(message));
 
 			return true;
 		case CHAT:
 
 			return true;
 		case CONSOLE:
-			plugin.console.sendMessage(plugin.tools.chat.chat(message));
+			plugin.console.sendMessage(tools.chat.chat(plugin.pluginPrefix + " " + message));
 			return true;
 		default:
 			return false;

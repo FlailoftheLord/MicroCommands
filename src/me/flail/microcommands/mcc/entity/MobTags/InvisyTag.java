@@ -20,7 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 
 @SuppressWarnings("unused")
 public class InvisyTag implements Listener {

@@ -3,7 +3,7 @@ package me.flail.microcommands.entity.player;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 
 /**
  * A modified version of {@link org.bukkit.entity.Player}

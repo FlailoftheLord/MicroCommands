@@ -6,12 +6,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.commands.homes.HomeCommand;
 import me.flail.microcommands.mcc.tools.ChatUtils;
+import me.flail.microcommands.mcc.tools.Tools;
 
 public class CommandProcessor {
 	MicroCommands plugin;
+
+	private Tools tools = new Tools();
 
 	public CommandProcessor(MicroCommands plugin) {
 		this.plugin = plugin;
@@ -19,7 +22,7 @@ public class CommandProcessor {
 
 	public boolean processCommand(CommandSender cmdSender, Command command, String label, String[] args) {
 
-		ChatUtils chatUtils = plugin.tools.chat;
+		ChatUtils chatUtils = tools.chat;
 
 		String cmd = command.getName().toLowerCase(Locale.ENGLISH);
 

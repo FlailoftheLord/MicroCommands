@@ -3,18 +3,20 @@ package me.flail.microcommands.mcc.commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.mcc.tools.ChatUtils;
+import me.flail.microcommands.mcc.tools.Tools;
 
 public class MainCommand {
 
 	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
 	private FileManager fm = plugin.fileManager;
+	private Tools tools = new Tools();
 
 	public void mcc(CommandSender sender, String command, String[] args) {
 
-		ChatUtils chat = plugin.tools.chat;
+		ChatUtils chat = tools.chat;
 
 		String cmd = command.toLowerCase();
 

@@ -6,9 +6,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import me.flail.microcommands.MicroCommands;
 import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.io.Logger.LogType;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.io.PlayerData;
 
 public class PlayerDataHandler implements PlayerData {

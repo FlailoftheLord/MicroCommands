@@ -6,17 +6,18 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import me.flail.microcommands.MicroCommands;
 import me.flail.microcommands.io.FileLoader;
+import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.io.Logger.LogType;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.tools.ChatUtils;
 
 public class FileManager implements FileLoader {
-	MicroCommands plugin;
+	private MicroCommands plugin;
 
 	private ConsoleCommandSender console;
-	private ILogger logger;
-	private ChatUtils chatUtils;
+	private Logger logger;
+	private ChatUtils chatUtils = new ChatUtils();
 
 	private String path;
 	private String pluginPrefix;
@@ -25,19 +26,18 @@ public class FileManager implements FileLoader {
 
 	public FileManager(MicroCommands inst) {
 		plugin = inst;
-		console = plugin.console;
-		logger = plugin.logger;
-		chatUtils = plugin.tools.chat;
+		console = inst.console;
+		logger = inst.logger;
 
-		path = plugin.path;
-		pluginPrefix = plugin.pluginPrefix;
+		path = MicroCommands.path;
+		pluginPrefix = inst.pluginPrefix;
 
-		config = plugin.getConfig();
+		config = inst.getConfig();
 	}
 
 	@Override
 	public String getMessage(String path) {
-		return this.getFile(plugin, "Messages.yml").get(path).toString();
+		return this.getFile("Messages.yml").get(path).toString();
 
 	}
 
@@ -58,7 +58,7 @@ public class FileManager implements FileLoader {
 	}
 
 	@Override
-	public FileConfiguration getFile(MicroCommands plugin, String fileName) {
+	public FileConfiguration getFile(String fileName) {
 
 		if (!fileName.endsWith(".yml")) {
 			fileName = fileName.concat(".yml");
@@ -67,7 +67,7 @@ public class FileManager implements FileLoader {
 		File settingsFile = new File(plugin.getDataFolder(), fileName);
 
 		if (!settingsFile.exists()) {
-			this.loadFile(plugin, fileName);
+			this.loadFile(fileName);
 		}
 
 		FileConfiguration config = new YamlConfiguration();
@@ -82,7 +82,7 @@ public class FileManager implements FileLoader {
 	}
 
 	@Override
-	public void loadFile(MicroCommands plugin, String fileName) {
+	public void loadFile(String fileName) {
 
 		if (!fileName.endsWith(".yml")) {
 			fileName = fileName.concat(".yml");
@@ -111,7 +111,8 @@ public class FileManager implements FileLoader {
 	}
 
 	@Override
-	public void saveFile(MicroCommands plugin, String fileName, FileConfiguration file) {
+	public void saveFile(FileConfiguration file) {
+		String fileName = file.getName();
 
 		if (!fileName.endsWith(".yml")) {
 			fileName = fileName.concat(".yml");
@@ -120,23 +121,17 @@ public class FileManager implements FileLoader {
 		File settingsFile = new File(plugin.getDataFolder(), fileName);
 
 		if (!settingsFile.exists()) {
-			this.loadFile(plugin, fileName);
+			this.loadFile(fileName);
 		}
 
 		settingsFile.mkdirs();
 
-		if (file != null) {
+		FileConfiguration settingsConfig = file;
 
-			FileConfiguration settingsConfig = file;
-
-			try {
-				settingsConfig.save(settingsFile);
-			} catch (Throwable e) {
-				logger.log("&4Couldn't load & save file: " + fileName, LogType.CONSOLE);
-			}
-
-		} else {
-			logger.log("&4Invalid or Null YAML file input.", LogType.CONSOLE);
+		try {
+			settingsConfig.save(settingsFile);
+		} catch (Throwable e) {
+			logger.log("&4Couldn't load & save file: " + fileName, LogType.CONSOLE);
 		}
 
 	}

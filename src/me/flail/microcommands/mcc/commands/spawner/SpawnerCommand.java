@@ -4,7 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.io.FileManager;
 
 @SuppressWarnings("unused")

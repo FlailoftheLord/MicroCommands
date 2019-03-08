@@ -7,13 +7,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.tools.ChatFormatting;
+import me.flail.microcommands.mcc.tools.Tools;
 
 public class ChatListener implements Listener {
 
 	private MicroCommands plugin = JavaPlugin.getPlugin(MicroCommands.class);
 	private ChatFormatting chatFormat = new ChatFormatting();
+	private Tools tools = new Tools();
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void playerChat(AsyncPlayerChatEvent event) {
@@ -34,7 +36,7 @@ public class ChatListener implements Listener {
 
 		event.setMessage(message);
 
-		event.setFormat(plugin.tools.chat.chat(chatFormat.chatFormat(player)));
+		event.setFormat(tools.chat.chat(chatFormat.chatFormat(player)));
 
 	}
 

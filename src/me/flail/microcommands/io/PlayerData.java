@@ -28,8 +28,9 @@ public interface PlayerData {
 	FileConfiguration get();
 
 	/**
-	 * Saves the players' file using the modified input {@linkplain file}
-	 *
+	 * Saves the players' file using the modified input
+	 * {@linkplain FileConfiguration} file
+	 * 
 	 * @param file
 	 * @return true if saved, false otherwise.
 	 */

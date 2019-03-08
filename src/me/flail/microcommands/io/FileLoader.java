@@ -2,7 +2,7 @@ package me.flail.microcommands.io;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 
 public interface FileLoader {
 
@@ -27,7 +27,7 @@ public interface FileLoader {
 	 * @param fileName the name of the file, with or without the '.yml'
 	 * @return the {@link FileConfiguration} if found, null otherwise.
 	 */
-	FileConfiguration getFile(MicroCommands plugin, String fileName);
+	FileConfiguration getFile(String fileName);
 
 	/**
 	 * Generates the file if it's not already loaded. Copies the internal contents
@@ -37,7 +37,7 @@ public interface FileLoader {
 	 * @param plugin   an instance of the main {@link MicroCommands} class
 	 * @param fileName the path to/from which the file should be loaded.
 	 */
-	void loadFile(MicroCommands plugin, String fileName);
+	void loadFile(String fileName);
 
 	/**
 	 * Saves the contents of the specified {@linkplain:file} to the pathname of
@@ -47,5 +47,5 @@ public interface FileLoader {
 	 * @param fileName path of the location where the file should be saved to.
 	 * @param file     the FileConfiguration to be saved to {@linkplain:fileName}
 	 */
-	void saveFile(MicroCommands plugin, String fileName, FileConfiguration file);
+	void saveFile(FileConfiguration file);
 }

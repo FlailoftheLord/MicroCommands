@@ -6,24 +6,18 @@ import java.util.List;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.io.Logger.LogType;
 import me.flail.microcommands.io.PlayerData;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.io.ILogger;
 import me.flail.microcommands.mcc.io.PlayerDataHandler;
 
 public class Tools {
-	MicroCommands plugin;
+	MicroCommands plugin = MicroCommands.instance;
 
-	public ChatUtils chat;
+	public ChatUtils chat = new ChatUtils();
 	public TimeUtils time = new TimeUtils();
-	private ILogger logger;
-
-	public Tools(MicroCommands mClass) {
-		plugin = mClass;
-		chat = new ChatUtils(plugin);
-		logger = plugin.logger;
-	}
 
 	public boolean safeLocation(Player player) {
 		boolean reply = false;
@@ -32,6 +26,7 @@ public class Tools {
 	}
 
 	public void consoleSpam() {
+		Logger logger = new ILogger();
 
 		startupDump(plugin);
 

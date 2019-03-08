@@ -5,14 +5,14 @@ import java.util.UUID;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import me.flail.microcommands.MicroCommands;
 import me.flail.microcommands.entity.player.MicroPlayer;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.mcc.io.PlayerDataHandler;
 
 public abstract class AbstractMicroPlayer implements MicroPlayer {
 
-	MicroCommands plugin = MicroCommands.plugin();
+	MicroCommands plugin = MicroCommands.instance;
 	FileManager fm = plugin.fileManager;
 
 	@Override

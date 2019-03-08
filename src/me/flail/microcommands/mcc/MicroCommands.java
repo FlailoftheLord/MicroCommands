@@ -1,14 +1,13 @@
 /*
  * <Copyright goes here>
  */
-package me.flail.microcommands;
+package me.flail.microcommands.mcc;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Server;
@@ -20,21 +19,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.mcc.commands.CommandProcessor;
-import me.flail.microcommands.mcc.entity.MobTags.InvisyTag;
-import me.flail.microcommands.mcc.events.ChatListener;
-import me.flail.microcommands.mcc.events.PlayerJoin;
-import me.flail.microcommands.mcc.events.PlayerQuit;
 import me.flail.microcommands.mcc.io.FileManager;
-import me.flail.microcommands.mcc.tools.Tools;
+import me.flail.microcommands.modules.MicroServer;
 
 public class MicroCommands extends JavaPlugin {
 
-	public Server server;
-	public ConsoleCommandSender console;
+	/**
+	 * Main Plugin instance! ;p Proudly & clumsily coded by a wild Flail.
+	 */
+	public static MicroCommands instance;
 
-	public FileManager fileManager;
-	public Tools tools;
+	public Server server = new MicroServer(this).get();
+	public ConsoleCommandSender console = server.getConsoleSender();
+
+	public FileManager fileManager = new FileManager(this);
 	public Logger logger;
 
 	public PluginManager plugin;
@@ -44,63 +44,36 @@ public class MicroCommands extends JavaPlugin {
 	public Map<String, FileConfiguration> playerFile = new HashMap<>();
 	public List<Player> vanishedPlayers = new ArrayList<>();
 
-	public String path = "plugins/MicroCommands/PlayerData/";
+	public static String path = "plugins/MicroCommands/PlayerData/";
 
 	public String version = this.getDescription().getVersion();
 	public String serverVersion = this.getServer().getVersion();
 	public String serverName;
 	public String pluginPrefix = "[" + getDescription().getPrefix() + "] ";
 
-	/**
-	 * Main Plugin instance! ;p Proudly & clumsily coded by a wild Flail.
-	 */
-	public static MicroCommands plugin() {
-		return getPlugin(MicroCommands.class);
-	}
-
 	@Override
 	public void onLoad() {
+		instance = this;
+
+		boolean load = new BootManager().load();
+		if (!load) {
+			this.getLogger().severe(
+					"MicroCommands hit an error while loading resources.  Disabling plugin safely, please restart your server.");
+			this.getServer().getPluginManager().disablePlugin(this);
+		}
 
 	}
 
 	@Override
 	public void onEnable() {
 
-		// load up the rest of the files and generate player files.
-		console.sendMessage(pluginPrefix + " loaded messages files");
-
-		// Register Events
-		registerEvents();
-
-		// Register Commands
-		registerCommands();
-
-		// Spam the console with useless shit. :>
-		tools.consoleSpam();
+		new BootManager().startup();
 
 	}
 
 	@Override
 	public void onDisable() {
 
-	}
-
-	public void registerEvents() {
-
-		plugin.registerEvents(new PlayerJoin(), this);
-		plugin.registerEvents(new PlayerQuit(), this);
-
-		plugin.registerEvents(new InvisyTag(), this);
-
-		plugin.registerEvents(new ChatListener(), this);
-
-	}
-
-	public void registerCommands() {
-		Set<String> commands = this.getDescription().getCommands().keySet();
-		for (String cmd : commands) {
-			getCommand(cmd).setExecutor(this);
-		}
 	}
 
 	@Override

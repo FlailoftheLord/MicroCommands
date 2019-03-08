@@ -12,8 +12,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.flail.microcommands.MicroCommands;
 import me.flail.microcommands.io.PlayerData;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.io.PlayerDataHandler;
 import me.flail.microcommands.modules.homes.Home;
 

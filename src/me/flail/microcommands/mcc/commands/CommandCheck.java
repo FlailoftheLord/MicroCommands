@@ -6,7 +6,7 @@ import org.bukkit.Server;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 
 public class CommandCheck {
 

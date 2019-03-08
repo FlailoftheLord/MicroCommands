@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import me.flail.microcommands.MicroCommands;
+import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.mcc.tools.Tools;
 
@@ -14,7 +14,7 @@ public class PlayerQuit implements Listener {
 	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
 	private FileManager fm = plugin.fileManager;
 
-	private Tools tools = plugin.tools;
+	private Tools tools = new Tools();
 
 	@EventHandler
 	public void playerLeave(PlayerQuitEvent event) {
