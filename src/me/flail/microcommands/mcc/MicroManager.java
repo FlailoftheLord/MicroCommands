@@ -1,6 +1,12 @@
 package me.flail.microcommands.mcc;
 
+import java.lang.reflect.Field;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.SimplePluginManager;
 
 import me.flail.microcommands.mcc.commands.CommandRegistration;
 import me.flail.microcommands.mcc.entity.MobTags.InvisyTag;
@@ -26,6 +32,8 @@ public class MicroManager {
 
 	public void registerCommands() {
 		CommandRegistration registry = new CommandRegistration();
+		registry.loadCommandsFromFile();
+
 	}
 
 	public boolean resourceLoader() {
@@ -40,6 +48,32 @@ public class MicroManager {
 			return false;
 		}
 
+	}
+
+	public static void registerCommandToServer(Command command) {
+		try {
+			serverCommandMap().register("m" + command.getName(), command);
+
+		} catch (Throwable t) {
+		}
+	}
+
+	private static CommandMap serverCommandMap() {
+		try {
+			if (Bukkit.getPluginManager() instanceof SimplePluginManager) {
+				Field f = SimplePluginManager.class.getDeclaredField("commandMap");
+				f.setAccessible(true);
+				CommandMap commandMap = (CommandMap) f.get(Bukkit.getPluginManager());
+
+				return commandMap;
+			}
+
+			return null;
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+
+		return null;
 	}
 
 }

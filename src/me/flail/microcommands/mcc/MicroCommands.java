@@ -19,12 +19,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
+import io.github.jorelali.commandapi.api.CommandExecutor;
 import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.mcc.commands.CommandProcessor;
+import me.flail.microcommands.mcc.commands.MicroCommand;
 import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.modules.MicroServer;
 
-public class MicroCommands extends JavaPlugin {
+public class MicroCommands extends JavaPlugin implements CommandExecutor {
 
 	/**
 	 * Main Plugin instance! ;p Proudly & clumsily coded by a wild Flail.
@@ -85,8 +89,23 @@ public class MicroCommands extends JavaPlugin {
 		return cmdControl.processCommand(sender, cmd, label, args);
 	}
 
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
+		List<String> completion = new ArrayList<>();
+
+		completion = new MicroCommand().getCommandArgs(command);
+
+		return completion;
+	}
+
 	public Collection<Player> getOnlinePlayers() {
 		return playerDatabase.values();
+	}
+
+	@Override
+	public void run(CommandSender sender, Object[] args) throws CommandSyntaxException {
+
 	}
 
 }

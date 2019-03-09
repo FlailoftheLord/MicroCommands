@@ -29,11 +29,9 @@ commands:
   mnms:
     description: lel
     usage: /mnms
-  
-  fly:
-    description: let me fly!!
-  
-Permissions:
+    
+    
+permissions:
   
   microcommands.command:
     description: use the main /microcommands command

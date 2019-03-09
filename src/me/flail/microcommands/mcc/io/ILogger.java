@@ -31,7 +31,7 @@ public class ILogger implements Logger {
 
 			return true;
 		case CONSOLE:
-			plugin.console.sendMessage(tools.chat.chat(plugin.pluginPrefix + " " + message));
+			plugin.console.sendMessage(tools.chat.chat(plugin.pluginPrefix + message));
 			return true;
 		default:
 			return false;

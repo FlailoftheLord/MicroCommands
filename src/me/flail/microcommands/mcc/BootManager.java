@@ -37,6 +37,8 @@ public class BootManager {
 			console.sendMessage("loaded config.yml");
 			fileManager.userDataFolder();
 			console.sendMessage("loaded player data folder");
+			this.loadExtraResources();
+			console.sendMessage("loaded configuration files.");
 
 			console.sendMessage("================");
 
@@ -54,6 +56,14 @@ public class BootManager {
 		logger.log("Loaded commands.", LogType.CONSOLE);
 		manager.registerEvents();
 		logger.log("Events initiated.", LogType.CONSOLE);
+
+	}
+
+	private void loadExtraResources() {
+
+		fileManager.loadFile("Commands");
+		fileManager.loadFile("Messages");
+		fileManager.loadFile("ServerData");
 
 	}
 
