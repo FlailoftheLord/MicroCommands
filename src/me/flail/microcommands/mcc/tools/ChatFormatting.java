@@ -16,7 +16,7 @@ public class ChatFormatting {
 
 		String format = fm.config.get("ChatFormat").toString();
 
-		return format.replace("$name$", "%1$s").replace("$message$", "%2$s");
+		return format.replace("$player$", "%1$s").replace("$message$", "%2$s");
 
 	}
 

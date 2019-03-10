@@ -29,11 +29,14 @@ public class CommandRegistration {
 				List<String> aliases = commands.getStringList(command + ".aliases");
 				List<String> args = new ArrayList<>();
 				String permission = commands.get(command + ".permission", "").toString();
+				String permMessage = commands.get(command + ".no-permission", "$no-permission$").toString();
 
 				for (String arg : commands.get(command + ".usage", "/" + command + " <args>").toString().split(" ")) {
 					args.add(arg);
 				}
 
+				cmd.setPermission(permission);
+				cmd.setPermissionMessage(permMessage);
 				cmd.setAliases(aliases);
 				cmd.setLabel(command);
 				cmd.setUsage(chat.chat(commands.get(command + ".usage", "/" + command + " <args>").toString()
@@ -44,7 +47,7 @@ public class CommandRegistration {
 
 				MicroManager.registerCommandToServer(cmd);
 
-				new MicroCommand().registerSuggestions(cmd, permission, aliases, args);
+				// new MicroCommand().registerSuggestions(cmd, permission, aliases, args);
 
 			}
 

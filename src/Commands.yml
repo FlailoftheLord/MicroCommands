@@ -1,20 +1,26 @@
 # Note: the arg options [arg] means optional and <arg> means required. 
 # These are just commonly used examples and are not Required, but they're highly recomended,
 # just so players know what's required and what's not.
+# Also, remember to put a double ' in messages, to let the plugin know that it's a punctuation and not the end of the message.
+# use the placeholders  $command$ and $permission$ for their relative objects... 
+#   (the name of said command, and the permission node for that command)
 
 Commands:
 
   fly:
     usage: '/$command$ [player-name]'
     permission: microcommands.fly
+    no-permission: '$prefix$ &cYou don''t have permission for $command$&8: &7$permission$'
     aliases:
     - mfly
     
   home:
     usage: '/$command$ <home-name:player> [home-name]'
     permission: microcommands.home
+    no-permission: '$prefix$ &cYou don''t have permission for &7$permission$'
     aliases:
     - sethome
     - delhome
     - hometp
     - homes
+    - mhome
