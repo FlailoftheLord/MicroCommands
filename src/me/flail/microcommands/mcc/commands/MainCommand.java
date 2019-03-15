@@ -29,8 +29,18 @@ public class MainCommand {
 
 		String serverString = plugin.serverName + " " + plugin.serverVersion;
 
-		if (args.length == 0) {
+		switch (args.length) {
+		case 0:
 			sender.sendMessage(chat.chat(fm.getMessage("About").replace("$server$", serverString)));
+			break;
+		case 1:
+			String first = args[0].toLowerCase();
+
+			if (first.equals("help") || first.equals("h")) {
+
+			}
+
+
 		}
 
 	}

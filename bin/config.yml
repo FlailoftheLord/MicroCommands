@@ -35,7 +35,7 @@ JoinMessage: "$prefix$ &e$player$ &7returned!"
 LeaveMessage: "$prefix$ &e$player$ &cleft the game."
 FirstJoinMessage: "$prefix$ &a$player$ &3has joined for the first time, welcome him!"
 
-ChatFormat: "&f$name$ &8» &7&l$message$"
+ChatFormat: "&f$player$ &8» &7&l$message$"
 
 # Command override list
 # These commands will always override other plugins

@@ -88,7 +88,7 @@ public class FileManager implements FileLoader {
 			fileName = fileName.concat(".yml");
 		}
 
-		File settingsFile = new File(plugin.getDataFolder() + "/" + fileName);
+		File settingsFile = new File(plugin.getDataFolder(), fileName);
 
 		if (!settingsFile.exists()) {
 			try {
