@@ -40,7 +40,7 @@ public class BootManager {
 			this.loadExtraResources();
 			console.sendMessage("loaded configuration files.");
 
-			console.sendMessage("================");
+			console.sendMessage("---------------------------");
 
 			return true;
 
@@ -62,7 +62,7 @@ public class BootManager {
 	private void loadExtraResources() {
 
 		fileManager.loadFile("Commands");
-		fileManager.loadFile("Messages");
+		fileManager.loadFile("Locale");
 		fileManager.loadFile("ServerData");
 
 	}

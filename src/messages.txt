@@ -1,16 +1,35 @@
+# Here is the complete messages file for the entire MicroCommands plugin.
+# If you find any missing messages, please let me know on SpigotMC, Discord, or GitHub.
+# Spigot:  https://www.spigotmc.org/members/flailofthelord.565303
+# Discord:  https://discord.gg/wuxW5PS
+# GitHub:  https://github.com/FlailoftheLord
+#  
+# When configuring, you may use single quotes or double quotes, or no quotes at all. 
+# I just recommend you use double quotes like so: "text here"
+#
+# For a list of all placeholders, use the command /mccadmin locale  
+# And it'll print out a file with all the information for customizing messages.
+#
+# Prefix for all messages
+# These are represented by $prefix$  and  $error$  respectively.
 Prefix: "&8[&2&lMCC&8]"
 Error: "4&lError&6:"
 
+# For multi-line messages use |-
+# then indent 4 spaces and add as many lines as you want!
+
+# = = = # General Messages # = = = #
 About: |-
   &aMicro&2Commands &8v&7$version$
   &7Running on $server$
 Reload: "$prefix$ &areloaded MicroCommands &7v$version$"
+NoPermission: "$prefix$ &cYou don't have permission for this!"
 
-
+# = = = # Spawners Module # = = = #
 SpawnerError: "$error$ &7Please try doing &7/$command$ &cagain."
 SpawnerUse: "$prefix$ &aUse &7/$command$ <get:give:set> [mob-type] [mob-data]"
 
-
+# = = = # Homes Module # = = = #
 Home: "$prefix$ &cUsage&8: &7/home <home-name:set:delete:list> [home-name] [player]"
 HomeSet: "$prefix$ &aSet home &7$home$&a. Use &7/home $home$ &ato teleport to it!"
 HomeSetOther: "$prefix$ &aSet home &7$home$ &afor &7$player$&a."

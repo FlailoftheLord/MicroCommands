@@ -13,12 +13,8 @@ public class ChatUtils {
 		return plugin.fileManager.getMessage(path);
 	}
 
-	public String getMessage(String path, String defaultValue) {
-		return plugin.fileManager.getFile("Messages.yml").get(path, defaultValue).toString();
-	}
-
 	public String chat(String message) {
-		String prefix = plugin.fileManager.getFile("Messages.yml").get("Prefix", "&8(&2&lMicroCommands&8)").toString();
+		String prefix = plugin.fileManager.getMessage("Prefix");
 
 		return ChatColor.translateAlternateColorCodes('&',
 				message.replace("$prefix$", prefix).replace("$version$", plugin.version));
@@ -27,11 +23,15 @@ public class ChatUtils {
 	public String wordToNumber(String value) {
 		String[] numberPrefixes = {
 				"zero:0", "ty :0", "teen:0",
-				"eleven:11", "one:1",
+				"eleven:11", "one:1", "ten:10",
 				"twen:2", "two:2",
 				"thir:3", "three:3",
 				"four:4",
-				"five:5", "fif:5", "fifty-" + Pattern.quote("[a-zA-Z]") + ":5"
+				"five:5", "fif:5",
+				"six:6",
+				"seven:7",
+				"eight:8", "eigh:8",
+				"nine:9"
 
 		};
 

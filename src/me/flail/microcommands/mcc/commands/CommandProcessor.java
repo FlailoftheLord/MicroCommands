@@ -34,7 +34,6 @@ public class CommandProcessor {
 		case "mnms":
 			cmdSender.sendMessage(chatUtils.chat("$prefix$ &6&lLol"));
 			break;
-
 		case "spawner":
 
 			break;

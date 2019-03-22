@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import me.flail.microcommands.io.FileLoader;
 import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.io.Logger.LogType;
+import me.flail.microcommands.lang.Locale.Locale;
 import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.tools.ChatUtils;
 
@@ -37,8 +38,9 @@ public class FileManager implements FileLoader {
 
 	@Override
 	public String getMessage(String path) {
-		return this.getFile("Messages.yml").get(path).toString();
+		String defaultValue = new Locale().message(path);
 
+		return this.getFile("Locale.yml").get(path, defaultValue).toString();
 	}
 
 	@Override

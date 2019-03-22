@@ -13,7 +13,6 @@ import me.flail.microcommands.mcc.entity.MobTags.InvisyTag;
 import me.flail.microcommands.mcc.events.ChatListener;
 import me.flail.microcommands.mcc.events.PlayerJoin;
 import me.flail.microcommands.mcc.events.PlayerQuit;
-import me.flail.microcommands.mcc.io.FileManager;
 
 public class MicroManager {
 	private MicroCommands plugin = MicroCommands.instance;
@@ -36,18 +35,13 @@ public class MicroManager {
 
 	}
 
-	public boolean resourceLoader() {
-		FileManager fileManager = new FileManager(plugin);
 
-		try {
+	public boolean reloadPlugin(boolean safe) {
+		if (safe) {
 
-			fileManager.loadFile("Messages.yml");
-
-			return true;
-		} catch (Exception e) {
-			return false;
 		}
 
+		return false;
 	}
 
 	public static void registerCommandToServer(Command command) {
