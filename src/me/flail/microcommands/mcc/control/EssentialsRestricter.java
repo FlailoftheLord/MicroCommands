@@ -1,10 +1,30 @@
 package me.flail.microcommands.mcc.control;
 
+import org.bukkit.plugin.Plugin;
+
+import me.flail.microcommands.mcc.MicroCommands;
+
 public class EssentialsRestricter {
 
-	public boolean disable() {
+	MicroCommands plugin = MicroCommands.instance;
 
-		return true;
+	public boolean disable() {
+		Plugin essentials = plugin.plugin.getPlugin("Essentials");
+
+		if (essentials.isEnabled()) {
+			plugin.server.getScheduler().cancelTasks(essentials);
+			for (String command : essentials.getDescription().getCommands().keySet()) {
+				if (command.startsWith("essentials")) {
+					plugin.server.getPluginCommand(command).setExecutor(null);
+				}
+			}
+
+			essentials.getPluginLoader().disablePlugin(essentials);
+			plugin.plugin.disablePlugin(essentials);
+			return true;
+		}
+
+		return false;
 	}
 
 }

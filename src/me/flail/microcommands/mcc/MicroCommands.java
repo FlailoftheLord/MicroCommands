@@ -55,6 +55,8 @@ public class MicroCommands extends JavaPlugin implements CommandExecutor {
 	public String serverName;
 	public String pluginPrefix = "[" + getDescription().getPrefix() + "] ";
 
+	public boolean isCommandAPI = false;
+
 	@Override
 	public void onLoad() {
 		instance = this;
@@ -94,8 +96,10 @@ public class MicroCommands extends JavaPlugin implements CommandExecutor {
 
 		List<String> completion = new ArrayList<>();
 
-		completion = new MicroCommand().getCommandArgs(command);
+		if (command.getName().equalsIgnoreCase("microcommands")) {
+			completion = new MicroCommand().getCommandArgs(command);
 
+		}
 		return completion;
 	}
 

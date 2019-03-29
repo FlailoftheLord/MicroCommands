@@ -43,7 +43,7 @@ public class ChatUtils {
 			value = value.replace(Pattern.quote("(?i)") + name, integer);
 		}
 
-		return value;
+		return value.replaceAll("[^0-9]", "");
 	}
 
 }

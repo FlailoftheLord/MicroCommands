@@ -13,7 +13,7 @@ import me.flail.microcommands.mcc.tools.Tools;
 
 public class ChatListener implements Listener {
 
-	private MicroCommands plugin = JavaPlugin.getPlugin(MicroCommands.class);
+	MicroCommands plugin = JavaPlugin.getPlugin(MicroCommands.class);
 	private ChatFormatting chatFormat = new ChatFormatting();
 	private Tools tools = new Tools();
 

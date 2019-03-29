@@ -12,6 +12,11 @@
 #
 # Prefix for all messages
 # These are represented by $prefix$  and  $error$  respectively.
+#
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = #
+
+Test: Test seems to be working... yay!
+
 Prefix: "&8[&2&lMCC&8]"
 Error: "4&lError&6:"
 
@@ -38,3 +43,9 @@ HomePermissionDenied: "$prefix$ &cYou can't use the &7/home &ccommand, &8(&7$per
 HomeTeleport: "$prefix$ &7teleporting to home: $home$..."
 HomeTeleportSuccess: ""
 HomeTeleportFailure: "$prefix$ &cTeleport was cancelled, try again."
+
+
+
+
+
+

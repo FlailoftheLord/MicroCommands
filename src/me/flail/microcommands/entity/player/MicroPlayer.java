@@ -13,15 +13,6 @@ import me.flail.microcommands.mcc.MicroCommands;
  */
 public interface MicroPlayer extends Player {
 
-	/**
-	 * converts {@link org.bukkit.entity.Player} to MicroPlayer
-	 *
-	 * @param player
-	 * @return {@link me.flail.microcommands.entity.player.MicroPlayer} if player is
-	 *         not null, otherwise returns null.
-	 */
-	<T> String getMicroPlayer(Player player);
-
 	MicroPlayer fromId(String pUuid);
 
 	FileConfiguration getDataFile();

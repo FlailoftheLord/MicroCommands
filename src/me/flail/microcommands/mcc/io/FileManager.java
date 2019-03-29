@@ -1,6 +1,7 @@
 package me.flail.microcommands.mcc.io;
 
 import java.io.File;
+import java.io.InputStream;
 
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -84,7 +85,7 @@ public class FileManager implements FileLoader {
 	}
 
 	@Override
-	public void loadFile(String fileName) {
+	public boolean loadFile(String fileName) {
 
 		if (!fileName.endsWith(".yml")) {
 			fileName = fileName.concat(".yml");
@@ -94,22 +95,15 @@ public class FileManager implements FileLoader {
 
 		if (!settingsFile.exists()) {
 			try {
-				plugin.saveResource(fileName, true);
+				return this.loadStream(settingsFile, plugin.getResource(fileName));
 			} catch (Throwable e) {
 			}
+
 		} else {
 			settingsFile.mkdirs();
 		}
 
-		FileConfiguration settingsConfig = new YamlConfiguration();
-
-		try {
-			settingsConfig.load(settingsFile);
-			settingsConfig.save(settingsFile);
-		} catch (Throwable t) {
-			logger.log("&4Couldn't load & save file: " + fileName, LogType.CONSOLE);
-		}
-
+		return false;
 	}
 
 	@Override
@@ -134,6 +128,23 @@ public class FileManager implements FileLoader {
 			settingsConfig.save(settingsFile);
 		} catch (Throwable e) {
 			logger.log("&4Couldn't load & save file: " + fileName, LogType.CONSOLE);
+		}
+
+	}
+
+	protected boolean loadStream(File file, InputStream stream) {
+		if (stream == null) {
+			try {
+				file.createNewFile();
+			} catch (Throwable t) {
+			}
+			return true;
+		}
+
+		try {
+			return true;
+		} catch (Throwable t) {
+			return false;
 		}
 
 	}

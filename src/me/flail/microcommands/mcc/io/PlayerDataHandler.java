@@ -8,13 +8,12 @@ import org.bukkit.entity.Player;
 
 import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.io.Logger.LogType;
-import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.io.PlayerData;
+import me.flail.microcommands.mcc.MicroCommands;
 
 public class PlayerDataHandler implements PlayerData {
 
-	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
-
+	private MicroCommands plugin = MicroCommands.instance;
 	String player = null;
 
 	Logger logger = new ILogger();
@@ -30,7 +29,7 @@ public class PlayerDataHandler implements PlayerData {
 
 		if (player != null) {
 
-			File playerFile = new File(plugin.path + player + ".yml");
+			File playerFile = new File(MicroCommands.path + player + ".yml");
 
 			boolean isLoaded = plugin.playerFile.containsKey(player);
 
@@ -66,7 +65,7 @@ public class PlayerDataHandler implements PlayerData {
 
 		try {
 
-			File playerFile = new File(plugin.path + "/" + player + ".yml");
+			File playerFile = new File(MicroCommands.path + "/" + player + ".yml");
 
 			config.save(playerFile);
 

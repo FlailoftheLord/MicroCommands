@@ -6,7 +6,7 @@ import me.flail.microcommands.mcc.MicroCommands;
 
 public class HomeCommand {
 
-	private MicroCommands plugin = MicroCommands.instance;
+	MicroCommands plugin = MicroCommands.instance;
 
 	public boolean home(CommandSender sender, String alias, String[] args) {
 

@@ -23,9 +23,12 @@ public interface FileLoader {
 	 * Gets the specified configuration file from the plugins' data folder. If it's
 	 * not found, it will return null.
 	 *
-	 * @param plugin   an instance of the main {@link MicroCommands} class
-	 * @param fileName the name of the file, with or without the '.yml'
-	 * @return the {@link FileConfiguration} if found, null otherwise.
+	 * @param plugin
+	 *                     an instance of the main {@link MicroCommands} class
+	 * @param fileName
+	 *                     the name of the file, with or without the '.yml'
+	 * @return the {@link FileConfiguration} if it was found, if not found, it will attempt to create
+	 *         it. If it can't create the new file, it will return null.
 	 */
 	FileConfiguration getFile(String fileName);
 
@@ -37,7 +40,7 @@ public interface FileLoader {
 	 * @param plugin   an instance of the main {@link MicroCommands} class
 	 * @param fileName the path to/from which the file should be loaded.
 	 */
-	void loadFile(String fileName);
+	boolean loadFile(String fileName);
 
 	/**
 	 * Saves the contents of the specified {@linkplain:file} to the pathname of

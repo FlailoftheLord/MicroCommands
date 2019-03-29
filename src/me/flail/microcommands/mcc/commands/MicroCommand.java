@@ -15,27 +15,31 @@ import me.flail.microcommands.mcc.MicroCommands;
 
 public class MicroCommand {
 
+	MicroCommands plugin = MicroCommands.instance;
+
 	public List<String> getCommandArgs(Command command) {
 
 		return new ArrayList<>();
 	}
 
 	public void registerSuggestions(Command command, String permission, List<String> aliases, List<String> args) {
-		try {
-			Constructor<CommandPermission> cmdPermConst = CommandPermission.class.getConstructor(String.class);
-			cmdPermConst.setAccessible(true);
-			CommandPermission perm = cmdPermConst.newInstance(permission);
+		if (plugin.isCommandAPI) {
+			try {
+				Constructor<CommandPermission> cmdPermConst = CommandPermission.class.getConstructor(String.class);
+				cmdPermConst.setAccessible(true);
+				CommandPermission perm = cmdPermConst.newInstance(permission);
 
-			LinkedHashMap<String, Argument> arguments = new LinkedHashMap<>();
+				LinkedHashMap<String, Argument> arguments = new LinkedHashMap<>();
 
-			for (String arg : args) {
-				arguments.put(arg, new StringArgument());
+				for (String arg : args) {
+					arguments.put(arg, new StringArgument());
+				}
+
+				this.register(command.getName(), perm, aliases.toArray(new String[] {}), arguments);
+
+			} catch (Throwable t) {
 			}
-
-			this.register(command.getName(), perm, aliases.toArray(new String[] {}), arguments);
-		} catch (Throwable t) {
 		}
-
 	}
 
 	protected boolean register(String command, CommandPermission permission, String[] aliases,

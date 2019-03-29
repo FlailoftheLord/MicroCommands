@@ -15,9 +15,8 @@ public abstract class AbstractMicroPlayer implements MicroPlayer {
 	MicroCommands plugin = MicroCommands.instance;
 	FileManager fm = plugin.fileManager;
 
-	@Override
-	public <T> String getMicroPlayer(Player player) {
-		return player.getUniqueId().toString();
+	public MicroPlayer(Player player) {
+
 	}
 
 	@Override

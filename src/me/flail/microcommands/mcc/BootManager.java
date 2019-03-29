@@ -52,6 +52,10 @@ public class BootManager {
 
 	public void startup() {
 
+		if (plugin.plugin.isPluginEnabled("CommandAPI")) {
+			plugin.isCommandAPI = true;
+		}
+
 		manager.registerCommands();
 		logger.log("Loaded commands.", LogType.CONSOLE);
 		manager.registerEvents();

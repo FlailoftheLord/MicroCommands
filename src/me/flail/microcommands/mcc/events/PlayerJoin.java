@@ -10,7 +10,7 @@ import me.flail.microcommands.mcc.tools.Tools;
 
 public class PlayerJoin implements Listener {
 
-	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
+	MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
 	private Tools tools = new Tools();
 
 	@EventHandler

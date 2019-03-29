@@ -15,9 +15,11 @@ soft-depend:
 - Vault
 - PlaceholderAPI
 - ProtocolLib
+- CommandAPI
 loadbefore: 
 - SlashPlayer
 - Essentials
+- CMI
 
 commands:
   

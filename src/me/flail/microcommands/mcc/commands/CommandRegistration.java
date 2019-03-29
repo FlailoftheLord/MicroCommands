@@ -14,20 +14,23 @@ import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.mcc.tools.ChatUtils;
 
 public class CommandRegistration {
-	private MicroCommands plugin = MicroCommands.instance;
+	MicroCommands plugin = MicroCommands.instance;
 	private FileManager fileManager = new FileManager(plugin);
 
 	public void loadCommandsFromFile() {
 		ConfigurationSection commands = fileManager.getFile("Commands.yml").getConfigurationSection("Commands");
+		ChatUtils chat = new ChatUtils();
 
 		if (commands != null) {
 
 			for (String command : commands.getKeys(false)) {
 				PluginCommand cmd = this.command(command, plugin);
-				ChatUtils chat = new ChatUtils();
+
 
 				List<String> aliases = commands.getStringList(command + ".aliases");
 				List<String> args = new ArrayList<>();
+				String description = commands.get(command + ".description", "").toString();
+
 				String permission = commands.get(command + ".permission", "").toString();
 				String permMessage = commands.get(command + ".no-permission", "$no-permission$").toString();
 
@@ -35,6 +38,7 @@ public class CommandRegistration {
 					args.add(arg);
 				}
 
+				cmd.setDescription(chat.chat(description));
 				cmd.setPermission(permission);
 				cmd.setPermissionMessage(permMessage);
 				cmd.setAliases(aliases);
@@ -47,7 +51,7 @@ public class CommandRegistration {
 
 				MicroManager.registerCommandToServer(cmd);
 
-				// new MicroCommand().registerSuggestions(cmd, permission, aliases, args);
+				new MicroCommand().registerSuggestions(cmd, permission, aliases, args);
 
 			}
 

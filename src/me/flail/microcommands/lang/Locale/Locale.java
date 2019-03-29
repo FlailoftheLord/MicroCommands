@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import me.flail.microcommands.mcc.MicroCommands;
-import me.flail.microcommands.mcc.io.LocaleInit;
+import me.flail.microcommands.mcc.io.Locale.LocaleInit;
 import me.flail.microcommands.mcc.tools.ChatUtils;
 
 public class Locale {

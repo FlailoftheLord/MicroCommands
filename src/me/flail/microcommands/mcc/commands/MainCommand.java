@@ -4,10 +4,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.microcommands.mcc.control.Debugger;
 import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.mcc.tools.ChatUtils;
 import me.flail.microcommands.mcc.tools.Tools;
 
+@SuppressWarnings("unused")
 public class MainCommand {
 
 	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
@@ -38,6 +40,13 @@ public class MainCommand {
 
 			if (first.equals("help") || first.equals("h")) {
 
+				break;
+			}
+
+			if (first.equals("debug")) {
+				if (sender.hasPermission("microcommands.debug")) {
+					new Debugger().run();
+				}
 			}
 
 
