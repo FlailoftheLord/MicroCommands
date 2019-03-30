@@ -1,6 +1,6 @@
 package me.flail.microcommands.mcc.io.Locale;
 
-import java.io.DataInputStream;
+import java.io.InputStream;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -27,7 +27,7 @@ public class LocaleInit extends FileManager {
 	}
 
 	public String readValue(String value) {
-		DataInputStream in = (DataInputStream) plugin.getResource("Locale.txt");
+		InputStream in = plugin.getResource("Locale.txt");
 
 		if (in != null) {
 
@@ -39,6 +39,7 @@ public class LocaleInit extends FileManager {
 
 
 
+			return "most definitely not nulll";
 		}
 		return "Not working at all...";
 	}

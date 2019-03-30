@@ -10,5 +10,4 @@ public enum MicroInventoryType {
 	HORSE,
 	LLAMA,
 	CUSTOM
-
 }

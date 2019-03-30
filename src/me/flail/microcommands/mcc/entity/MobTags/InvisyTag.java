@@ -27,7 +27,7 @@ public class InvisyTag implements Listener {
 
 	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
 
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void mobTagEvent(PlayerInteractEntityEvent event) {
 
 		Player player = event.getPlayer();

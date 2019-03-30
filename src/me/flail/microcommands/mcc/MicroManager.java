@@ -13,6 +13,7 @@ import me.flail.microcommands.mcc.entity.MobTags.InvisyTag;
 import me.flail.microcommands.mcc.events.ChatListener;
 import me.flail.microcommands.mcc.events.PlayerJoin;
 import me.flail.microcommands.mcc.events.PlayerQuit;
+import me.flail.microcommands.modules.inventory.GuiManager;
 
 public class MicroManager {
 	private MicroCommands plugin = MicroCommands.instance;
@@ -26,6 +27,8 @@ public class MicroManager {
 		manager.registerEvents(new InvisyTag(), plugin);
 
 		manager.registerEvents(new ChatListener(), plugin);
+
+		manager.registerEvents(new GuiManager(), plugin);
 
 	}
 

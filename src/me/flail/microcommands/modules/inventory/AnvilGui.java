@@ -1,5 +1,11 @@
 package me.flail.microcommands.modules.inventory;
 
-public interface AnvilGui extends CustomInventory {
+import org.bukkit.event.inventory.InventoryType;
+
+public class AnvilGui extends MicroGui {
+
+	public AnvilGui(String name, InventoryType type) {
+		super(name, InventoryType.ANVIL);
+	}
 
 }

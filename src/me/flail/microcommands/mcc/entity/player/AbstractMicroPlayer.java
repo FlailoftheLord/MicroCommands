@@ -15,7 +15,7 @@ public abstract class AbstractMicroPlayer implements MicroPlayer {
 	MicroCommands plugin = MicroCommands.instance;
 	FileManager fm = plugin.fileManager;
 
-	public MicroPlayer(Player player) {
+	public AbstractMicroPlayer(Player player) {
 
 	}
 
