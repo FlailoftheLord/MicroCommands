@@ -8,6 +8,13 @@ import me.flail.microcommands.mcc.MicroCommands;
 
 public class ChatUtils {
 	MicroCommands plugin = MicroCommands.instance;
+	public static char codeChar = '&';
+
+	public ChatUtils() {
+		plugin = MicroCommands.instance;
+		codeChar = plugin.fileManager.getFile("config").get("ChatCodeChar", "&").toString().replaceAll(" &[a-fA-Fk-oK-O0-9]", "")
+				.charAt(0);
+	}
 
 	public String getMessage(String path) {
 		return plugin.fileManager.getMessage(path);
@@ -16,7 +23,7 @@ public class ChatUtils {
 	public String chat(String message) {
 		String prefix = plugin.fileManager.getMessage("Prefix");
 
-		return ChatColor.translateAlternateColorCodes('&',
+		return ChatColor.translateAlternateColorCodes(codeChar,
 				message.replace("$prefix$", prefix).replace("$version$", plugin.version));
 	}
 
@@ -40,7 +47,7 @@ public class ChatUtils {
 			String name = s.split(":")[0];
 			String integer = s.split(":")[1];
 
-			value = value.replace(Pattern.quote("(?i)") + name, integer);
+			value = value.replaceAll(Pattern.quote("(?i)") + name, integer);
 		}
 
 		return value.replaceAll("[^0-9]", "");

@@ -38,7 +38,7 @@ public class MainCommand {
 		case 1:
 			String first = args[0].toLowerCase();
 
-			if (first.equals("help") || first.equals("h")) {
+			if (first.contains("help")) {
 
 				break;
 			}

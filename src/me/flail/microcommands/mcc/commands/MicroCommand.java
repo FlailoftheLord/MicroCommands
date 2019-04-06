@@ -1,56 +1,101 @@
 package me.flail.microcommands.mcc.commands;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.bukkit.command.Command;
+import org.bukkit.Server;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.Plugin;
 
-import io.github.jorelali.commandapi.api.CommandAPI;
-import io.github.jorelali.commandapi.api.CommandPermission;
-import io.github.jorelali.commandapi.api.arguments.Argument;
-import io.github.jorelali.commandapi.api.arguments.StringArgument;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+
 import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.microcommands.mcc.commodore.Commodore;
+import me.flail.microcommands.mcc.commodore.CommodoreProvider;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class MicroCommand {
+	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
+	private Server server = plugin.getServer();
 
-	MicroCommands plugin = MicroCommands.instance;
-
-	public List<String> getCommandArgs(Command command) {
-
-		return new ArrayList<>();
+	protected static boolean brigadierSupported() {
+		return CommodoreProvider.isSupported();
 	}
 
-	public void registerSuggestions(Command command, String permission, List<String> aliases, List<String> args) {
-		if (plugin.isCommandAPI) {
-			try {
-				Constructor<CommandPermission> cmdPermConst = CommandPermission.class.getConstructor(String.class);
-				cmdPermConst.setAccessible(true);
-				CommandPermission perm = cmdPermConst.newInstance(permission);
+	public List<String> getCommandArgs(PluginCommand command) {
+		List<String> args = new ArrayList<>();
+		for (String s : command.getUsage().split(" ")) {
+			if (s.startsWith("/")) {
+				continue;
+			}
 
-				LinkedHashMap<String, Argument> arguments = new LinkedHashMap<>();
+			args.add(s.toLowerCase());
+		}
 
-				for (String arg : args) {
-					arguments.put(arg, new StringArgument());
+		return args;
+	}
+
+	public boolean isCommandTaken(String cmd) {
+		boolean isTaken = false;
+		PluginCommand command = server.getPluginCommand(cmd);
+
+		if (command != null) {
+
+			Plugin commandOwner = command.getPlugin();
+
+			if (!commandOwner.getDescription().getMain().contains("me.flail.microcommands")) {
+				isTaken = true;
+			}
+
+		}
+
+		return isTaken;
+	}
+
+	public boolean isDisabled(String cmd) {
+
+		boolean isDisabled = false;
+		PluginCommand command = plugin.getCommand(cmd);
+		List<String> aliases = command.getAliases();
+		List<String> disabledCmds = plugin.getConfig().getStringList("DisabledCommands");
+
+		for (String s : aliases) {
+			for (String c : disabledCmds) {
+
+				if (c.equalsIgnoreCase(s)) {
+					isDisabled = true;
+					break;
 				}
 
-				this.register(command.getName(), perm, aliases.toArray(new String[] {}), arguments);
-
-			} catch (Throwable t) {
 			}
 		}
+
+		return isDisabled;
 	}
 
-	protected boolean register(String command, CommandPermission permission, String[] aliases,
-			LinkedHashMap<String, Argument> args) {
-		try {
-			CommandAPI.getInstance().register(command, permission, aliases, args, MicroCommands.instance);
+	public void registerSuggestions(PluginCommand command, String permission) {
 
-			return true;
-		} catch (Throwable t) {
-			return false;
+		if (brigadierSupported()) {
+			Commodore processor = CommodoreProvider.getCommodore(plugin);
+
+			LiteralArgumentBuilder<?> builder = LiteralArgumentBuilder.literal(command.getName());
+
+			for (String arg : this.getCommandArgs(command)) {
+				builder.then(arg(arg));
+			}
+
+			builder.build();
+
+			processor.register(command, builder);
 		}
+
+	}
+
+	private static ArgumentBuilder arg(String arg) {
+		return RequiredArgumentBuilder.argument(arg, StringArgumentType.string());
 
 	}
 

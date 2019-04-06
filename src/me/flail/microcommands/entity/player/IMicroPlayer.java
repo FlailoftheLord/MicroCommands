@@ -11,9 +11,11 @@ import me.flail.microcommands.mcc.MicroCommands;
  * @author FlailoftheLord
  *
  */
-public interface MicroPlayer extends Player {
+public interface IMicroPlayer {
 
-	MicroPlayer fromId(String pUuid);
+	IMicroPlayer fromId(String pUuid);
+
+	Player player();
 
 	FileConfiguration getDataFile();
 
@@ -25,7 +27,7 @@ public interface MicroPlayer extends Player {
 	 *         otherwise.
 	 *
 	 */
-	boolean isIgnoring(MicroPlayer player);
+	boolean isIgnoring(IMicroPlayer player);
 
 	/**
 	 * Checks if the player is ignoring @param subject
@@ -38,7 +40,7 @@ public interface MicroPlayer extends Player {
 	 *         otherwise.
 	 *
 	 */
-	boolean isIgnoring(MicroPlayer subject, MicroCommands plugin);
+	boolean isIgnoring(IMicroPlayer subject, MicroCommands plugin);
 
 	/**
 	 * Gets wether this player is allowed to fly or not.

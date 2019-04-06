@@ -51,7 +51,7 @@ public class CommandRegistration {
 
 				MicroManager.registerCommandToServer(cmd);
 
-				new MicroCommand().registerSuggestions(cmd, permission, aliases, args);
+				new MicroCommand().registerSuggestions(cmd, permission);
 
 			}
 

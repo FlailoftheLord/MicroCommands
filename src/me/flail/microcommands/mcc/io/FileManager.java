@@ -1,11 +1,15 @@
 package me.flail.microcommands.mcc.io;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStream;
 
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 
 import me.flail.microcommands.io.FileLoader;
 import me.flail.microcommands.io.Logger;
@@ -15,11 +19,11 @@ import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.tools.ChatUtils;
 
 public class FileManager implements FileLoader {
-	private MicroCommands plugin;
+	private MicroCommands plugin = MicroCommands.instance;
+	public String dataFolder;
 
 	private ConsoleCommandSender console;
 	private Logger logger;
-	private ChatUtils chatUtils = new ChatUtils();
 
 	private String path;
 	private String pluginPrefix;
@@ -31,7 +35,9 @@ public class FileManager implements FileLoader {
 		console = inst.console;
 		logger = inst.logger;
 
-		path = MicroCommands.path;
+		dataFolder = plugin.getDataFolder().getPath();
+
+		path = "plugins/MicroCommands/PlayerData";
 		pluginPrefix = inst.pluginPrefix;
 
 		config = inst.getConfig();
@@ -41,7 +47,11 @@ public class FileManager implements FileLoader {
 	public String getMessage(String path) {
 		String defaultValue = new Locale().message(path);
 
-		return this.getFile("Locale.yml").get(path, defaultValue).toString();
+		if (new File(plugin.getDataFolder(), "Locale.yml").exists()) {
+			return this.getFile("Locale.yml").get(path, defaultValue).toString();
+		}
+
+		return defaultValue;
 	}
 
 	@Override
@@ -54,7 +64,7 @@ public class FileManager implements FileLoader {
 
 			if (!makeFolder) {
 				console.sendMessage(
-						chatUtils.chat(pluginPrefix + " &cCould not generate PlayerData folder in path: */" + path));
+						new ChatUtils().chat(pluginPrefix + " &cCould not generate PlayerData folder in path: */" + path));
 			}
 		}
 
@@ -132,21 +142,43 @@ public class FileManager implements FileLoader {
 
 	}
 
+	@Override
+	public File create(File file) {
+		try {
+			file.createNewFile();
+		} catch (Exception e) {
+			return null;
+		}
+		return file;
+	}
+
 	protected boolean loadStream(File file, InputStream stream) {
 		if (stream == null) {
 			try {
 				file.createNewFile();
 			} catch (Throwable t) {
+				t.printStackTrace();
+				return false;
 			}
 			return true;
 		}
 
 		try {
-			return true;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+			for (String line : reader.lines().toArray(String[]::new)) {
+				writer.append(line + "\r\n");
+
+			}
+
+			writer.close();
+			reader.close();
 		} catch (Throwable t) {
+			t.printStackTrace();
 			return false;
 		}
-
+		return true;
 	}
 
 }

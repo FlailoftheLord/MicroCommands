@@ -22,6 +22,10 @@
 #   If you have any suggestions for improvement, or any feedback...
 #  just join my discord server! (linked above) or pm me on SpigotMC.
 
+debug: true
+CommandLogging: true
+
+ChatCodeChar: '&'
 
 # Custom join and leave messages
 # for multiple lines simply format it like this ->

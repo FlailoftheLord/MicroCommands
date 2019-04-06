@@ -33,8 +33,6 @@ public class BootManager {
 			plugin.serverName = server.getName();
 
 			// Load up config and other resource files before the plugin is enabled.
-			plugin.saveDefaultConfig();
-			console.sendMessage("loaded config.yml");
 			fileManager.userDataFolder();
 			console.sendMessage("loaded player data folder");
 			this.loadExtraResources();
@@ -52,10 +50,6 @@ public class BootManager {
 
 	public void startup() {
 
-		if (plugin.plugin.isPluginEnabled("CommandAPI")) {
-			plugin.isCommandAPI = true;
-		}
-
 		manager.registerCommands();
 		logger.log("Loaded commands.", LogType.CONSOLE);
 		manager.registerEvents();
@@ -66,7 +60,6 @@ public class BootManager {
 	private void loadExtraResources() {
 
 		fileManager.loadFile("Commands");
-		fileManager.loadFile("Locale");
 		fileManager.loadFile("ServerData");
 
 	}

@@ -1,8 +1,8 @@
 package me.flail.microcommands.mcc.entity;
 
-import me.flail.microcommands.entity.MicroEntity;
+import me.flail.microcommands.entity.IMicroEntity;
 
-public abstract class IME implements MicroEntity, MicroEntity.CraftSinon {
+public abstract class IME implements IMicroEntity, IMicroEntity.CraftSinon {
 
 	@Override
 	public CraftSinon sinon(String name) {

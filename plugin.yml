@@ -15,7 +15,6 @@ soft-depend:
 - Vault
 - PlaceholderAPI
 - ProtocolLib
-- CommandAPI
 loadbefore: 
 - SlashPlayer
 - Essentials
@@ -27,6 +26,10 @@ commands:
     description: main command for the plugin
     usage: /microcommands [help:reload]
     aliases: [mcc, mmcc, microcommands, mmicrocommands]
+  mccadmin:
+    description: administrative commands.
+    usage: /mccadmin [locale:settings:server]
+    aliases: []
   
   mnms:
     description: lel

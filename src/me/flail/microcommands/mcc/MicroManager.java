@@ -10,6 +10,7 @@ import org.bukkit.plugin.SimplePluginManager;
 
 import me.flail.microcommands.mcc.commands.CommandRegistration;
 import me.flail.microcommands.mcc.entity.MobTags.InvisyTag;
+import me.flail.microcommands.mcc.events.BlockLogging;
 import me.flail.microcommands.mcc.events.ChatListener;
 import me.flail.microcommands.mcc.events.PlayerJoin;
 import me.flail.microcommands.mcc.events.PlayerQuit;
@@ -23,6 +24,7 @@ public class MicroManager {
 
 		manager.registerEvents(new PlayerJoin(), plugin);
 		manager.registerEvents(new PlayerQuit(), plugin);
+		manager.registerEvents(new BlockLogging(), plugin);
 
 		manager.registerEvents(new InvisyTag(), plugin);
 

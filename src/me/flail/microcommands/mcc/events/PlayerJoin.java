@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.mcc.tools.Tools;
 
 public class PlayerJoin implements Listener {
@@ -19,6 +20,11 @@ public class PlayerJoin implements Listener {
 		Player player = event.getPlayer();
 
 		tools.loadPlayer(player);
+
+		if (player.hasPermission("microcommands.flyjoin")) {
+			MicroPlayer mPlayer = new MicroPlayer(player);
+			mPlayer.player().setFlying(!mPlayer.player().getAllowFlight());
+		}
 
 	}
 

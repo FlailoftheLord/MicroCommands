@@ -7,20 +7,20 @@
 
 Commands:
 
-  fly:
-    usage: '/$command$ [player-name]'
-    permission: microcommands.fly
-    no-permission: '$prefix$ &cYou don''t have permission for $command$&8: &7$permission$'
-    aliases:
-    - mfly
-    
-  home:
-    usage: '/$command$ <home-name:player> [home-name]'
-    permission: microcommands.home
-    no-permission: '$prefix$ &cYou don''t have permission for &7$permission$'
-    aliases:
-    - sethome
-    - delhome
-    - hometp
-    - homes
-    - mhome
+#  fly:
+#    usage: '/$command$ [player-name]'
+#    permission: microcommands.fly
+#    no-permission: '$prefix$ &cYou don''t have permission for $command$&8: &7$permission$'
+#    aliases:
+#    - mfly
+#    
+#  home:
+#    usage: '/$command$ <home-name:player> [home-name]'
+#    permission: microcommands.home
+#    no-permission: '$prefix$ &cYou don''t have permission for &7$permission$'
+#    aliases:
+#    - sethome
+#    - delhome
+#    - hometp
+#    - homes
+#    - mhome

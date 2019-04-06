@@ -8,27 +8,28 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
+import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
-import io.github.jorelali.commandapi.api.CommandExecutor;
 import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.mcc.commands.CommandProcessor;
 import me.flail.microcommands.mcc.commands.MicroCommand;
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.modules.MicroServer;
 
-public class MicroCommands extends JavaPlugin implements CommandExecutor {
+public class MicroCommands extends JavaPlugin {
 
 	/**
 	 * Main Plugin instance! ;p Proudly & clumsily coded by a wild Flail.
@@ -48,14 +49,12 @@ public class MicroCommands extends JavaPlugin implements CommandExecutor {
 	public Map<String, FileConfiguration> playerFile = new HashMap<>();
 	public List<Player> vanishedPlayers = new ArrayList<>();
 
-	public static String path = "plugins/MicroCommands/PlayerData/";
+	public Map<MicroPlayer, Set<Location>> blockData = new HashMap<>();
 
 	public String version = this.getDescription().getVersion();
 	public String serverVersion = this.getServer().getVersion();
 	public String serverName;
 	public String pluginPrefix = "[" + getDescription().getPrefix() + "] ";
-
-	public boolean isCommandAPI = false;
 
 	@Override
 	public void onLoad() {
@@ -97,7 +96,7 @@ public class MicroCommands extends JavaPlugin implements CommandExecutor {
 		List<String> completion = new ArrayList<>();
 
 		if (command.getName().equalsIgnoreCase("microcommands")) {
-			completion = new MicroCommand().getCommandArgs(command);
+			completion = new MicroCommand().getCommandArgs((PluginCommand) command);
 
 		}
 		return completion;
@@ -105,11 +104,6 @@ public class MicroCommands extends JavaPlugin implements CommandExecutor {
 
 	public Collection<Player> getOnlinePlayers() {
 		return playerDatabase.values();
-	}
-
-	@Override
-	public void run(CommandSender sender, Object[] args) throws CommandSyntaxException {
-
 	}
 
 }

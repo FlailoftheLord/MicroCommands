@@ -1,6 +1,6 @@
 package me.flail.microcommands.entity;
 
-public interface MicroEntity {
+public interface IMicroEntity {
 
 	public interface CraftSinon {
 

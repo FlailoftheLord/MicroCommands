@@ -13,8 +13,10 @@ import me.flail.microcommands.mcc.MicroCommands;
 
 public class PlayerDataHandler implements PlayerData {
 
-	private MicroCommands plugin = MicroCommands.instance;
+	protected MicroCommands plugin = MicroCommands.instance;
 	String player = null;
+
+	private String path = plugin.getDataFolder() + "/PlayerData/";
 
 	Logger logger = new ILogger();
 
@@ -29,7 +31,7 @@ public class PlayerDataHandler implements PlayerData {
 
 		if (player != null) {
 
-			File playerFile = new File(MicroCommands.path + player + ".yml");
+			File playerFile = new File(path + player + "/Data.yml");
 
 			boolean isLoaded = plugin.playerFile.containsKey(player);
 
@@ -65,7 +67,7 @@ public class PlayerDataHandler implements PlayerData {
 
 		try {
 
-			File playerFile = new File(MicroCommands.path + "/" + player + ".yml");
+			File playerFile = new File(path + player + "/Data.yml");
 
 			config.save(playerFile);
 
@@ -90,5 +92,7 @@ public class PlayerDataHandler implements PlayerData {
 
 		return null;
 	}
+
+
 
 }

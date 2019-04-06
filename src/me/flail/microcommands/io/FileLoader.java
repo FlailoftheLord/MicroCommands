@@ -1,5 +1,7 @@
 package me.flail.microcommands.io;
 
+import java.io.File;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
 import me.flail.microcommands.mcc.MicroCommands;
@@ -51,4 +53,13 @@ public interface FileLoader {
 	 * @param file     the FileConfiguration to be saved to {@linkplain:fileName}
 	 */
 	void saveFile(FileConfiguration file);
+
+	/**
+	 * Creates a new file.
+	 * 
+	 * @param file
+	 *                 Filepath to generate file for.
+	 * @return the newly generated file, null otherwise.
+	 */
+	File create(File file);
 }
