@@ -19,7 +19,7 @@ public class TabCompleter {
 		int length = arguments.length;
 
 		try {
-			String[] options = parseArgs(usage.substring(usage.indexOf("<")).split(" ")[length - 1]);
+			String[] options = parseArgs(usage/* .substring(usage.indexOf("<")) */.split(" ")[length - 1]);
 
 			for (String s : options) {
 				if (!s.isEmpty() && s.startsWith(arguments[length - 1])) {
