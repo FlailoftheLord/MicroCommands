@@ -1,5 +1,6 @@
 /*
- * <Copyright goes here>
+ * Copyright (C) 2019 FlailoftheLord.
+ * Read the LICENSE file under this plugin's root directory for the full license details.
  */
 package me.flail.microcommands.mcc;
 
@@ -16,7 +17,6 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -24,9 +24,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.mcc.commands.CommandProcessor;
-import me.flail.microcommands.mcc.commands.MicroCommand;
 import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.mcc.io.FileManager;
+import me.flail.microcommands.mcc.tools.TabCompleter;
 import me.flail.microcommands.modules.MicroServer;
 
 public class MicroCommands extends JavaPlugin {
@@ -93,13 +93,7 @@ public class MicroCommands extends JavaPlugin {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 
-		List<String> completion = new ArrayList<>();
-
-		if (command.getName().equalsIgnoreCase("microcommands")) {
-			completion = new MicroCommand().getCommandArgs((PluginCommand) command);
-
-		}
-		return completion;
+		return new TabCompleter(sender, command).get(args);
 	}
 
 	public Collection<Player> getOnlinePlayers() {

@@ -1,6 +1,11 @@
 # Note: the arg options [arg] means optional and <arg> means required. 
 # These are just commonly used examples and are not Required, but they're highly recomended,
 # just so players know what's required and what's not.
+# If you want tab completion to work for commands, it's going to take the arguments from the usage section. (you can change usage messages in the Locale.yml)
+# Follow this format for proper argument implementation for 1.13 Tab completion:
+# /<command-goes-here> <required-arg:admin> [arg:another-arg:help:list] 
+# Anyting inside <> is a required argument, aka. It's required in order to show the next argument in tab completion.
+# Use ':' to separate multiple args.
 # Also, remember to put a double ' in messages, to let the plugin know that it's a punctuation and not the end of the message.
 # use the placeholders  $command$ and $permission$ for their relative objects... 
 #   (the name of said command, and the permission node for that command)

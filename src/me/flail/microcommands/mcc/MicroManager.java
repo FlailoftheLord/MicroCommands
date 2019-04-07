@@ -66,8 +66,6 @@ public class MicroManager {
 
 				return commandMap;
 			}
-
-			return null;
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
