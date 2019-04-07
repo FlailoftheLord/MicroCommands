@@ -17,45 +17,55 @@ public class CommandRegistration {
 	MicroCommands plugin = MicroCommands.instance;
 	private FileManager fileManager = new FileManager(plugin);
 
-	public void loadCommandsFromFile() {
+	public PluginCommand[] getCommands() {
 		ConfigurationSection commands = fileManager.getFile("Commands.yml").getConfigurationSection("Commands");
-		ChatUtils chat = new ChatUtils();
+		List<PluginCommand> list = new ArrayList<>();
 
 		if (commands != null) {
 
 			for (String command : commands.getKeys(false)) {
-				PluginCommand cmd = this.command(command, plugin);
+				list.add(this.command(command, plugin));
+			}
+		}
 
+		return list.toArray(new PluginCommand[] {});
+	}
 
-				List<String> aliases = commands.getStringList(command + ".aliases");
-				List<String> args = new ArrayList<>();
-				String description = commands.get(command + ".description", "").toString();
+	public void loadCommandsFromFile() {
+		ChatUtils chat = new ChatUtils();
+		ConfigurationSection commands = fileManager.getFile("Commands.yml").getConfigurationSection("Commands");
 
-				String permission = commands.get(command + ".permission", "").toString();
-				String permMessage = commands.get(command + ".no-permission", "$no-permission$").toString();
+		for (PluginCommand cmd : (getCommands() != null) ? getCommands() : new PluginCommand[] {}) {
+			String command = cmd.getName();
 
-				for (String arg : commands.get(command + ".usage", "/" + command + " <args>").toString().split(" ")) {
-					args.add(arg);
-				}
+			List<String> aliases = commands.getStringList(command + ".aliases");
+			List<String> args = new ArrayList<>();
+			String description = commands.get(command + ".description", "").toString();
 
-				cmd.setDescription(chat.chat(description));
-				cmd.setPermission(permission);
-				cmd.setPermissionMessage(permMessage);
-				cmd.setAliases(aliases);
-				cmd.setLabel(command);
-				cmd.setUsage(chat.chat(commands.get(command + ".usage", "/" + command + " <args>").toString()
-						.replace("$command$", command)));
+			String permission = commands.get(command + ".permission", "").toString();
+			String permMessage = commands.get(command + ".no-permission", "$no-permission$").toString();
 
-				cmd.setExecutor(plugin);
-				cmd.setTabCompleter(plugin);
-
-				MicroManager.registerCommandToServer(cmd);
-
-				new MicroCommand().registerSuggestions(cmd, permission);
-
+			for (String arg : commands.get(command + ".usage", "/" + command + " <args>").toString().split(" ")) {
+				args.add(arg);
 			}
 
+			cmd.setDescription(chat.chat(description));
+			cmd.setPermission(permission);
+			cmd.setPermissionMessage(permMessage);
+			cmd.setAliases(aliases);
+			cmd.setLabel(command);
+			cmd.setUsage(chat.chat(commands.get(command + ".usage", "/" + command + " <args>").toString()
+					.replace("$command$", command)));
+
+			cmd.setExecutor(plugin);
+			cmd.setTabCompleter(plugin);
+
+			MicroManager.registerCommandToServer(cmd);
+
+			new MicroCommand().registerSuggestions(cmd, permission);
+
 		}
+
 
 	}
 
