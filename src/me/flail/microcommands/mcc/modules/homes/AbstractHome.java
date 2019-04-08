@@ -1,162 +1,102 @@
 package me.flail.microcommands.mcc.modules.homes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import me.flail.microcommands.io.PlayerData;
-import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.mcc.io.PlayerDataHandler;
-import me.flail.microcommands.modules.homes.MccHome;
+import me.flail.microcommands.modules.homes.MicroHome;
 
-public abstract class AbstractHome implements MccHome {
+/**
+ * Note for plugin devs: use {@link Home} instead of accessing this class.
+ * 
+ * @author FlailoftheLord
+ */
+public abstract class AbstractHome implements MicroHome {
+	protected PlayerData pData = new PlayerDataHandler();
+	protected MicroPlayer owner;
+	protected HomeLocation home;
 
-	private MicroCommands plugin = JavaPlugin.getPlugin(MicroCommands.class);
-	private PlayerData pData = new PlayerDataHandler();
-
-	protected AbstractHome() {
+	/**
+	 * Note for plugin devs: use {@link Home} instead of accessing this class.
+	 * 
+	 * @param owner
+	 *                  The owner of this home.
+	 * @param home
+	 *                  This homes' location: {@link HomeLocation} object.
+	 */
+	protected AbstractHome(MicroPlayer owner, HomeLocation home) {
+		this.owner = owner;
+		this.home = home;
 	}
 
 	@Override
 	public String name() {
-		String[] values = this.values().toArray(new String[0]);
-		return values[0];
+		return home.getName();
 	}
 
 	@Override
-	public String owner() {
-		String[] keys = this.keySet().toArray(new String[0]);
-		return keys[0];
+	public MicroPlayer owner() {
+		return owner;
 	}
 
 	@Override
-	public MccHome getHome(String playerUuid, String name) {
+	public HomeLocation location() {
+		return home;
+	}
 
-		FileConfiguration playerConfig = pData.player(playerUuid).get();
-
-		if (playerConfig.contains("Homes." + name.toLowerCase())) {
-
-			MccHome home = MccHome.class.cast(new HashMap<String, String>());
-
-			home.put(playerUuid.trim(), name.toLowerCase());
-
-			return home;
-		} else {
-			return null;
-		}
+	@Override
+	public void setName(String name) {
 
 	}
 
 	@Override
-	public List<String> getHomes(String playerUuid) {
-
-		FileConfiguration playerConfig = pData.player(playerUuid).get();
-
-		if (playerConfig.contains("Homes")) {
-			List<String> homes = new ArrayList<>();
-
-			for (String h : playerConfig.getConfigurationSection("Homes").getKeys(false)) {
-				homes.add(h.toLowerCase());
-			}
-
-			return homes;
-		}
-
-		return new ArrayList<>();
-	}
-
-	@Override
-	public boolean hasHome(String playerUuid, String homeName) {
-		PlayerData player = pData.player(playerUuid);
-
-		FileConfiguration playerConfig = player.get();
-		if (playerConfig.contains("Homes." + homeName.toLowerCase())) {
-			return true;
-		} else {
-			return false;
-		}
+	public void setWorld(World world) {
 
 	}
 
 	@Override
-	public boolean set(Location location, boolean overwrite) {
-		PlayerData player = pData.player(this.owner());
+	public void setLocation(HomeLocation location) {
 
-		FileConfiguration playerConfig = player.get();
+	}
+
+	@Override
+	public void delete() {
+
+	}
+
+	/**
+	 * Saves this home to the file, if and ONLY if it doesn't already exist.
+	 * Use {@linkplain Home#save(boolean overwrite)} to specify wether to overwrite homes on save.
+	 */
+	public void save() {
+		save(false);
+	}
+
+	@Override
+	public void save(boolean overwrite) {
+		this.set(home, overwrite);
+	}
+
+	private boolean set(HomeLocation location, boolean overwrite) {
+		FileConfiguration playerConfig = owner.getDataFile();
+
 		if (!overwrite && playerConfig.contains("Homes." + this.name())) {
 			return false;
-		} else {
-			playerConfig.set("Homes." + this.name() + ".Location.World", location.getWorld().getName());
-			playerConfig.set("Homes." + this.name() + ".Location.X", location.getBlockX());
-			playerConfig.set("Homes." + this.name() + ".Location.Y", location.getBlockY());
-			playerConfig.set("Homes." + this.name() + ".Location.Z", location.getBlockZ());
-			playerConfig.set("Homes." + this.name() + ".Location.Pitch", location.getPitch());
-			playerConfig.set("Homes." + this.name() + ".Location.Yaw", location.getYaw());
-
-			return player.save(playerConfig);
 		}
+		playerConfig.set("Homes." + this.name() + ".Location.World", location.getWorld().getName());
+		playerConfig.set("Homes." + this.name() + ".Location.X", location.getX());
+		playerConfig.set("Homes." + this.name() + ".Location.Y", location.getY());
+		playerConfig.set("Homes." + this.name() + ".Location.Z", location.getZ());
+		playerConfig.set("Homes." + this.name() + ".Location.Pitch", location.getPitch());
+		playerConfig.set("Homes." + this.name() + ".Location.Yaw", location.getYaw());
+
+		owner.saveDataFile(playerConfig);
+		return true;
+
 	}
 
-	@Override
-	public boolean setHome(String playerUuid, Location location, String name, boolean overwrite) {
-		MccHome home = this.getHome(playerUuid, name);
 
-		return home.set(location, overwrite);
-	}
-
-	@Override
-	public boolean deleteHome(String playerUuid, String home) {
-		try {
-			PlayerData player = pData.player(playerUuid);
-
-			FileConfiguration playerConfig = player.get();
-			playerConfig.set("Homes." + home.toLowerCase(), null);
-
-			return player.save(playerConfig);
-		} catch (Throwable t) {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean sendToHome(String playerUuid, String homeName) {
-		try {
-			PlayerData player = pData.player(playerUuid);
-			FileConfiguration playerConfig = player.get();
-
-			ConfigurationSection home = playerConfig.getConfigurationSection("Homes." + homeName.toLowerCase());
-
-			if (home != null) {
-
-				World world = plugin.server.getWorld(home.get("Location.World", "world").toString());
-				int x = home.getInt("Location.X", 0);
-				int y = home.getInt("Location.Y", 64);
-				int z = home.getInt("Location.Z", 0);
-				float pitch = (float) home.getDouble("Location.Pitch", 90);
-				float yaw = (float) home.getDouble("Location.Yaw", 0);
-
-				Location homeLocation = new Location(world, x, y, z, yaw, pitch);
-				UUID pUuid = UUID.fromString(playerUuid);
-				if (plugin.playerDatabase.containsKey(pUuid)) {
-					Player homeOwner = plugin.playerDatabase.get(pUuid);
-
-					return homeOwner.teleport(homeLocation);
-				}
-
-			}
-
-			return false;
-		} catch (Throwable t) {
-			return false;
-		}
-	}
 
 }

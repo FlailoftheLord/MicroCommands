@@ -10,6 +10,7 @@ import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.io.Logger.LogType;
 import me.flail.microcommands.io.PlayerData;
 import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 
 public class PlayerDataHandler implements PlayerData {
 
@@ -21,8 +22,8 @@ public class PlayerDataHandler implements PlayerData {
 	Logger logger = new ILogger();
 
 	@Override
-	public PlayerData player(String playerUuid) {
-		player = playerUuid;
+	public PlayerData player(MicroPlayer player) {
+		this.player = player.uuid().toString();
 		return this;
 	}
 

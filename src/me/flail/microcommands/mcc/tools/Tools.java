@@ -10,6 +10,7 @@ import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.io.Logger.LogType;
 import me.flail.microcommands.io.PlayerData;
 import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.mcc.io.ILogger;
 import me.flail.microcommands.mcc.io.PlayerDataHandler;
 
@@ -48,15 +49,16 @@ public class Tools {
 
 		for (Player p : plugin.server.getOnlinePlayers()) {
 			plugin.playerDatabase.put(p.getUniqueId(), p);
-			loadPlayer(p);
+			loadPlayer(new MicroPlayer(p));
 		}
 		plugin.logger.log("Loaded up players.", c);
 
 	}
 
-	public boolean loadPlayer(Player player) {
+	public boolean loadPlayer(MicroPlayer p) {
+		Player player = p.player();
 
-		PlayerData playerFile = new PlayerDataHandler().player(player.getUniqueId().toString());
+		PlayerData playerFile = new PlayerDataHandler().player(p);
 
 		FileConfiguration file = playerFile.get();
 

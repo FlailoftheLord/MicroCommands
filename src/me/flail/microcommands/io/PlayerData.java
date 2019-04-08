@@ -3,6 +3,8 @@ package me.flail.microcommands.io;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
+
 public interface PlayerData {
 
 	/**
@@ -11,7 +13,7 @@ public interface PlayerData {
 	 * @param player
 	 * @return itself... idk lol
 	 */
-	PlayerData player(String playerUuid);
+	PlayerData player(MicroPlayer player);
 
 	/**
 	 * Gets the player by their name.

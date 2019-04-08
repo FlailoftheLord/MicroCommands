@@ -36,8 +36,36 @@ public class HomeLocation {
 		return new Location(world, x, y, z, pitch, yaw);
 	}
 
+	public String getName() {
+		return home;
+	}
+
 	public void teleport(MicroPlayer player) {
 		player.player().teleport(this.toLocation());
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getZ() {
+		return z;
+	}
+
+	public float getPitch() {
+		return pitch;
+	}
+
+	public float getYaw() {
+		return yaw;
 	}
 
 }

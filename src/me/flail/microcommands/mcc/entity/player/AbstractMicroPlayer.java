@@ -4,12 +4,10 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import me.flail.microcommands.entity.player.IMicroPlayer;
 import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.io.FileManager;
-import me.flail.microcommands.mcc.io.PlayerDataHandler;
 
 public abstract class AbstractMicroPlayer implements IMicroPlayer {
 	protected static OfflinePlayer player;
@@ -19,6 +17,7 @@ public abstract class AbstractMicroPlayer implements IMicroPlayer {
 
 	public AbstractMicroPlayer(OfflinePlayer player) {
 		AbstractMicroPlayer.player = player;
+
 	}
 
 	public static OfflinePlayer fromId(UUID id) {
@@ -32,11 +31,6 @@ public abstract class AbstractMicroPlayer implements IMicroPlayer {
 	}
 
 	@Override
-	public FileConfiguration getDataFile() {
-		return new PlayerDataHandler().player(player.getUniqueId().toString()).get();
-	}
-
-	@Override
 	public boolean isIgnoring(IMicroPlayer player) {
 
 		return false;
@@ -47,6 +41,7 @@ public abstract class AbstractMicroPlayer implements IMicroPlayer {
 
 		return false;
 	}
+
 
 	@Override
 	public boolean canFly() {

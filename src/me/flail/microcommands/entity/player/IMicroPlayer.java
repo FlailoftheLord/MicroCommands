@@ -1,9 +1,12 @@
 package me.flail.microcommands.entity.player;
 
+import java.util.List;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.microcommands.mcc.modules.homes.Home;
 
 /**
  * A modified version of {@link org.bukkit.entity.Player}
@@ -54,6 +57,13 @@ public interface IMicroPlayer {
 	 * Opens an anvil inventory for this player
 	 */
 	void openAnvil();
+
+	/**
+	 * Gets a list of the player's homes from their data folder.
+	 * 
+	 * @return a full list of their homes, will return an empty list if they don't have any homes.
+	 */
+	List<Home> getHomes();
 
 	public enum property {
 		/**
