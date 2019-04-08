@@ -1,4 +1,4 @@
-package me.flail.microcommands.mcc.commands.modules;
+package me.flail.microcommands.mcc.modules;
 
 import me.flail.microcommands.mcc.MicroCommands;
 

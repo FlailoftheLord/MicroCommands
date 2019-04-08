@@ -1,4 +1,4 @@
-package me.flail.microcommands.mcc.commands.homes;
+package me.flail.microcommands.mcc.modules.homes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,12 +15,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.flail.microcommands.io.PlayerData;
 import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.io.PlayerDataHandler;
-import me.flail.microcommands.modules.homes.Home;
+import me.flail.microcommands.modules.homes.MccHome;
 
-public abstract class AbstractHome implements Home {
+public abstract class AbstractHome implements MccHome {
 
 	private MicroCommands plugin = JavaPlugin.getPlugin(MicroCommands.class);
 	private PlayerData pData = new PlayerDataHandler();
+
+	protected AbstractHome() {
+	}
 
 	@Override
 	public String name() {
@@ -35,13 +38,13 @@ public abstract class AbstractHome implements Home {
 	}
 
 	@Override
-	public Home getHome(String playerUuid, String name) {
+	public MccHome getHome(String playerUuid, String name) {
 
 		FileConfiguration playerConfig = pData.player(playerUuid).get();
 
 		if (playerConfig.contains("Homes." + name.toLowerCase())) {
 
-			Home home = Home.class.cast(new HashMap<String, String>());
+			MccHome home = MccHome.class.cast(new HashMap<String, String>());
 
 			home.put(playerUuid.trim(), name.toLowerCase());
 
@@ -104,7 +107,7 @@ public abstract class AbstractHome implements Home {
 
 	@Override
 	public boolean setHome(String playerUuid, Location location, String name, boolean overwrite) {
-		Home home = this.getHome(playerUuid, name);
+		MccHome home = this.getHome(playerUuid, name);
 
 		return home.set(location, overwrite);
 	}

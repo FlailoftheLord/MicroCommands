@@ -1,29 +1,26 @@
 package me.flail.microcommands.modules.homes;
 
 import java.util.List;
-import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * Extends a simple map consisting of the players' UUID converted to a string,
- * and the specified home/section of homes in the players' data file.
+ * A customizable Home object, containing a player-owner & a unique location (server-wide)
  *
  * @author FlailoftheLord
- *
  */
-public interface Home extends Map<String, String> {
+public interface MccHome {
 
 	/**
-	 * Converts the home to a new {@link Home} object
+	 * Converts the home to a new {@link MccHome} object
 	 *
 	 * @param playerUuid
 	 * @param name
 	 * @return the new Home object, providing the player & home name both exist and
 	 *         are valid/not null.
 	 */
-	Home getHome(String playerUuid, String name);
+	MccHome getHome(String playerUuid, String name);
 
 	/**
 	 * @return the name of the home.

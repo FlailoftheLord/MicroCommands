@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.flail.microcommands.mcc.MicroCommands;
-import me.flail.microcommands.mcc.commands.homes.HomeCommand;
 import me.flail.microcommands.mcc.tools.ChatUtils;
 import me.flail.microcommands.mcc.tools.Tools;
 

@@ -1,4 +1,4 @@
-package me.flail.microcommands.mcc.commands.homes;
+package me.flail.microcommands.mcc.commands;
 
 import org.bukkit.command.CommandSender;
 

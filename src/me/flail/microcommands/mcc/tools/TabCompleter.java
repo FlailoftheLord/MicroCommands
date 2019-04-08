@@ -13,13 +13,20 @@ public class TabCompleter {
 		this.command = command;
 	}
 
+	/*
+	 * XXX Works... but could be better.
+	 */
 	public List<String> get(String[] arguments) {
 		List<String> list = new ArrayList<>();
 		String usage = command.getUsage();
 		int length = arguments.length;
 
+
 		try {
-			String[] options = parseArgs(usage/* .substring(usage.indexOf("<")) */.split(" ")[length - 1]);
+			String[] options = parseArgs(usage.split(" ")[length - 1]);
+			if (length > options.length) {
+				return list;
+			}
 
 			for (String s : options) {
 				if (!s.isEmpty() && s.startsWith(arguments[length - 1])) {

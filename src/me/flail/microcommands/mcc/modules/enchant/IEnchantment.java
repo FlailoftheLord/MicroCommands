@@ -1,4 +1,4 @@
-package me.flail.microcommands.mcc.commands.enchant;
+package me.flail.microcommands.mcc.modules.enchant;
 
 import org.bukkit.inventory.ItemStack;
 

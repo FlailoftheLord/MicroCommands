@@ -1,4 +1,4 @@
-package me.flail.microcommands.mcc.commands.spawner;
+package me.flail.microcommands.mcc.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
