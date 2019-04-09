@@ -3,6 +3,8 @@ package me.flail.microcommands.mcc.commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Server;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
@@ -53,6 +55,11 @@ public class MicroCommand {
 		}
 
 		return isTaken;
+	}
+
+	@Nullable
+	public PluginCommand getCommand(String name) {
+		return server.getPluginCommand(name);
 	}
 
 	public boolean isDisabled(String cmd) {

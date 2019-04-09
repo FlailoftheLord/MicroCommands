@@ -6,6 +6,8 @@ public interface Logger {
 		CHAT, CONSOLE, FILE;
 	}
 
+	boolean console(String message);
+
 	boolean log(String message, LogType type);
 
 	void logToFile(String log);

@@ -23,13 +23,13 @@ public class TabCompleter {
 
 
 		try {
-			String[] options = parseArgs(usage.split(" ")[length - 1]);
+			String[] options = parseArgs(usage.split(" ")[length]);
 			if (length > options.length) {
 				return list;
 			}
 
 			for (String s : options) {
-				if (!s.isEmpty() && s.startsWith(arguments[length - 1])) {
+				if (!s.isEmpty() && !s.equals(" ") && s.startsWith(arguments[length - 1])) {
 					list.add(s);
 				}
 			}

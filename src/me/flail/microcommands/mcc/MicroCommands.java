@@ -5,8 +5,9 @@
 package me.flail.microcommands.mcc;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,7 +46,8 @@ public class MicroCommands extends JavaPlugin {
 	public PluginManager plugin;
 	public CommandProcessor cmdControl;
 
-	public Map<UUID, Player> playerDatabase = new HashMap<>();
+	public Set<MicroPlayer> playerDatabase = new HashSet<>(32);
+	public Map<String, UUID> offlinePlayers = new LinkedHashMap<>(256);
 	public Map<String, FileConfiguration> playerFile = new HashMap<>();
 	public List<Player> vanishedPlayers = new ArrayList<>();
 
@@ -96,8 +98,8 @@ public class MicroCommands extends JavaPlugin {
 		return new TabCompleter(sender, command).get(args);
 	}
 
-	public Collection<Player> getOnlinePlayers() {
-		return playerDatabase.values();
+	public Set<MicroPlayer> getOnlinePlayers() {
+		return playerDatabase;
 	}
 
 }

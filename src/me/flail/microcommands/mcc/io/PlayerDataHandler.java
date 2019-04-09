@@ -84,10 +84,10 @@ public class PlayerDataHandler implements PlayerData {
 	@Override
 	public Player fromName(String playerName) {
 
-		for (Player player : plugin.playerDatabase.values()) {
-			String pName = player.getName().toLowerCase();
+		for (MicroPlayer player : plugin.playerDatabase) {
+			String pName = player.player().getName().toLowerCase();
 			if (pName.startsWith(playerName.toLowerCase()) || pName.equalsIgnoreCase(playerName)) {
-				return player;
+				return player.player();
 			}
 		}
 

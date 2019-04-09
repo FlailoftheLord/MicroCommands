@@ -2,9 +2,10 @@ package me.flail.microcommands.inventory;
 
 import java.util.UUID;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 
 public interface Gui {
 
@@ -30,7 +31,7 @@ public interface Gui {
 	 * @param player
 	 *                   subject to open this GUI for.
 	 */
-	void open(Player player);
+	void open(MicroPlayer player);
 
 	@Deprecated
 	/**
@@ -41,7 +42,7 @@ public interface Gui {
 	 *                   You can set this to null if you wish, in which case, it will just close the
 	 *                   active gui.
 	 */
-	void close(Player player);
+	void close(MicroPlayer player);
 
 	/**
 	 * Does the same thing as the method {@code Gui#close(Player player);}

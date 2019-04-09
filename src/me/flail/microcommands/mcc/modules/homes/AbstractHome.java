@@ -1,11 +1,10 @@
 package me.flail.microcommands.mcc.modules.homes;
 
-import org.bukkit.World;
+import java.util.regex.Pattern;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
-import me.flail.microcommands.io.PlayerData;
 import me.flail.microcommands.mcc.entity.player.MicroPlayer;
-import me.flail.microcommands.mcc.io.PlayerDataHandler;
 import me.flail.microcommands.modules.homes.MicroHome;
 
 /**
@@ -14,7 +13,6 @@ import me.flail.microcommands.modules.homes.MicroHome;
  * @author FlailoftheLord
  */
 public abstract class AbstractHome implements MicroHome {
-	protected PlayerData pData = new PlayerDataHandler();
 	protected MicroPlayer owner;
 	protected HomeLocation home;
 
@@ -48,22 +46,20 @@ public abstract class AbstractHome implements MicroHome {
 
 	@Override
 	public void setName(String name) {
-
-	}
-
-	@Override
-	public void setWorld(World world) {
-
+		home.name(name);
 	}
 
 	@Override
 	public void setLocation(HomeLocation location) {
-
+		home = location;
 	}
 
 	@Override
-	public void delete() {
+	public boolean delete() {
+		FileConfiguration playerConfig = owner.getDataFile();
+		playerConfig.set(Pattern.quote("(?i)") + "Homes." + home.getName(), null);
 
+		return !playerConfig.contains(Pattern.quote("(?i)") + "Homes." + home.getName());
 	}
 
 	/**
@@ -75,8 +71,8 @@ public abstract class AbstractHome implements MicroHome {
 	}
 
 	@Override
-	public void save(boolean overwrite) {
-		this.set(home, overwrite);
+	public boolean save(boolean overwrite) {
+		return this.set(home, overwrite);
 	}
 
 	private boolean set(HomeLocation location, boolean overwrite) {
@@ -94,9 +90,7 @@ public abstract class AbstractHome implements MicroHome {
 
 		owner.saveDataFile(playerConfig);
 		return true;
-
 	}
-
 
 
 }

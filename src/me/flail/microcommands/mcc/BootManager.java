@@ -1,12 +1,15 @@
 package me.flail.microcommands.mcc;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
 import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.io.Logger.LogType;
 import me.flail.microcommands.mcc.commands.CommandProcessor;
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.mcc.io.ILogger;
 import me.flail.microcommands.mcc.tools.Tools;
@@ -49,11 +52,24 @@ public class BootManager {
 	}
 
 	public void startup() {
+		long startTime = System.currentTimeMillis();
 
 		manager.registerCommands();
 		logger.log("Loaded commands.", LogType.CONSOLE);
 		manager.registerEvents();
 		logger.log("Events initiated.", LogType.CONSOLE);
+		this.loadPlayers();
+		logger.console("Player Database Loaded!");
+
+		long endTime = System.currentTimeMillis();
+		double bootTime = (endTime - startTime);
+		logger.console("");
+		if (bootTime > 1000) {
+			logger.console("Startup finished in " + (bootTime / 1000) + "s\n");
+			return;
+		}
+
+		logger.console("Startup finished in " + bootTime + "ms\n");
 
 	}
 
@@ -61,6 +77,18 @@ public class BootManager {
 
 		fileManager.loadFile("Commands");
 		fileManager.loadFile("ServerData");
+
+	}
+
+	public void loadPlayers() {
+		plugin.offlinePlayers.clear();
+		plugin.playerDatabase.clear();
+		for (OfflinePlayer player : plugin.server.getOfflinePlayers()) {
+			plugin.offlinePlayers.putIfAbsent(player.getName().toLowerCase(), player.getUniqueId());
+		}
+		for (Player player : plugin.server.getOnlinePlayers()) {
+			plugin.playerDatabase.add(new MicroPlayer(player));
+		}
 
 	}
 

@@ -92,4 +92,9 @@ public class ILogger implements Logger {
 
 	}
 
+	@Override
+	public boolean console(String message) {
+		return this.log(message, LogType.CONSOLE);
+	}
+
 }

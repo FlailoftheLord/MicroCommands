@@ -25,12 +25,6 @@ public abstract class AbstractMicroPlayer implements IMicroPlayer {
 	}
 
 	@Override
-	public IMicroPlayer fromId(String pUuid) {
-		return (IMicroPlayer) plugin.playerDatabase.get(UUID.fromString(pUuid));
-
-	}
-
-	@Override
 	public boolean isIgnoring(IMicroPlayer player) {
 
 		return false;

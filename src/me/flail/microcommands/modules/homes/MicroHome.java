@@ -1,7 +1,5 @@
 package me.flail.microcommands.modules.homes;
 
-import org.bukkit.World;
-
 import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.mcc.modules.homes.AbstractHome;
 import me.flail.microcommands.mcc.modules.homes.Home;
@@ -40,13 +38,16 @@ public interface MicroHome {
 	 * 
 	 * @param overwrite
 	 *                      Wether to overwrite the home if it already exists.
+	 * @return true if home was saved, false otherwise.
 	 */
-	void save(boolean overwrite);
+	boolean save(boolean overwrite);
 
 	/**
 	 * Clears this instance and deletes this home from the player's data file, if it exists.
+	 * 
+	 * @return true, if successfully deleted, false otherwise.
 	 */
-	void delete();
+	boolean delete();
 
 	/**
 	 * Change the name of this home.
@@ -55,14 +56,6 @@ public interface MicroHome {
 	 *                 The new name of this home.
 	 */
 	void setName(String name);
-
-	/**
-	 * Change the world in which this home is located. (x, y, and z coordinates still stay the same.)
-	 * 
-	 * @param world
-	 *                  The new world to which this home will belong.
-	 */
-	void setWorld(World world);
 
 	/**
 	 * Sets the new location for this home.

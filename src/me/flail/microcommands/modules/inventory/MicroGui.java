@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.flail.microcommands.inventory.Gui;
 import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 
 public abstract class MicroGui implements Gui {
 	MicroCommands plugin = MicroCommands.instance;
@@ -43,24 +43,24 @@ public abstract class MicroGui implements Gui {
 	}
 
 	@Override
-	public void open(Player player) {
-		activeGuiList.put(player.getUniqueId(), id);
-		player.openInventory(gui);
+	public void open(MicroPlayer player) {
+		activeGuiList.put(player.uuid(), id);
+		player.player().openInventory(gui);
 	}
 
 	@Deprecated
 	@Override
-	public void close(Player player) {
-		player.closeInventory();
-		activeGuiList.remove(player.getUniqueId());
+	public void close(MicroPlayer player) {
+		player.player().closeInventory();
+		activeGuiList.remove(player.uuid());
 	}
 
 	@Override
 	public void delete() {
-		for (Player player : plugin.playerDatabase.values()) {
-			if (activeGuiList.containsKey(player.getUniqueId())) {
-				if (activeGuiList.get(player.getUniqueId()).equals(id())) {
-					player.closeInventory();
+		for (MicroPlayer player : plugin.playerDatabase) {
+			if (activeGuiList.containsKey(player.uuid())) {
+				if (activeGuiList.get(player.uuid()).equals(id())) {
+					player.player().closeInventory();
 				}
 			}
 		}

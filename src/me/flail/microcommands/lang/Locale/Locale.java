@@ -12,6 +12,9 @@ public class Locale {
 	MicroCommands plugin = MicroCommands.instance;
 	private LocaleInit localeInit = new LocaleInit(plugin);
 
+	public Locale() {
+	}
+
 	/**
 	 * Gets the message corresponding to the specified value.
 	 * 

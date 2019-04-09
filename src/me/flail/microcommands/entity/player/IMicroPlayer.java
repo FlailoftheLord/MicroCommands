@@ -16,8 +16,6 @@ import me.flail.microcommands.mcc.modules.homes.Home;
  */
 public interface IMicroPlayer {
 
-	IMicroPlayer fromId(String pUuid);
-
 	Player player();
 
 	FileConfiguration getDataFile();

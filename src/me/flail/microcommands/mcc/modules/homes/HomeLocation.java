@@ -15,21 +15,37 @@ public class HomeLocation {
 	private float yaw;
 
 	public HomeLocation(String home, World world, int x, int y, int z) {
+		set(home, world, x, y, z, 90, 00);
+	}
+
+	public HomeLocation(String home, World world, int x, int y, int z, float pitch, float yaw) {
+		set(home, world, x, y, z, pitch, yaw);
+	}
+
+	public HomeLocation(String home, Location loc) {
+		set(home, loc.getWorld(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), loc.getPitch(), loc.getYaw());
+	}
+
+	/**
+	 * Visible only to plain extents.
+	 * Used to set all options, prevents repetetive code.s
+	 * 
+	 * @param home
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param pitch
+	 * @param yaw
+	 */
+	protected void set(String home, World world, int x, int y, int z, float pitch, float yaw) {
 		this.home = home;
 		this.world = world;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		pitch = 90;
-		yaw = 00;
-	}
-
-	public HomeLocation(String home, World world, int x, int y, int z, float pitch, float yaw) {
-		new HomeLocation(home, world, x, y, z, pitch, yaw);
-	}
-
-	public HomeLocation(String home, Location loc) {
-		new HomeLocation(home, loc.getWorld(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), loc.getPitch(), loc.getYaw());
+		this.pitch = pitch;
+		this.yaw = yaw;
 	}
 
 	public Location toLocation() {
@@ -38,6 +54,10 @@ public class HomeLocation {
 
 	public String getName() {
 		return home;
+	}
+
+	public void name(String newName) {
+		home = newName;
 	}
 
 	public void teleport(MicroPlayer player) {
@@ -66,6 +86,10 @@ public class HomeLocation {
 
 	public float getYaw() {
 		return yaw;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
 	}
 
 }
