@@ -22,7 +22,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  *  SOFTWARE.
  */
-package me.flail.microcommands.mcc.commodore;
+package me.flail.microcommands.mcc.me.lucko.commodore;
 
 import java.util.Collection;
 import java.util.List;

@@ -23,43 +23,52 @@
  *  SOFTWARE.
  */
 
-package me.flail.microcommands.mcc.commodore;
+package me.flail.microcommands.mcc.me.lucko.commodore;
 
-import org.bukkit.Bukkit;
+import java.util.Objects;
 
-final class ReflectionUtil {
-	private static final String SERVER_VERSION = getServerVersion();
+import org.bukkit.plugin.Plugin;
 
-	private static String getServerVersion() {
-		Class<?> server = Bukkit.getServer().getClass();
-		if (!server.getSimpleName().equals("CraftServer")) {
-			return ".";
+/**
+ * Factory for obtaining instances of {@link Commodore}.
+ */
+public final class CommodoreProvider {
+
+	/**
+	 * Checks to see if the Brigadier command system is supported by the server.
+	 *
+	 * @return true if commodore is supported.
+	 */
+	public static boolean isSupported() {
+		try {
+			Class.forName("com.mojang.brigadier.CommandDispatcher");
+			CommodoreImpl.ensureSetup();
+			return true;
+		} catch (Throwable e) {
+			return false;
 		}
-		if (server.getName().equals("org.bukkit.craftbukkit.CraftServer")) {
-			// Non versioned class
-			return ".";
-		} else {
-			String version = server.getName().substring("org.bukkit.craftbukkit".length());
-			return version.substring(0, version.length() - "CraftServer".length());
+	}
+
+	/**
+	 * Obtains a {@link Commodore} instance for the given plugin.
+	 *
+	 * <p>Throws a {@link RuntimeException} if brigadier is not
+	 * {@link #isSupported() supported} by the server.</p>
+	 *
+	 * @param plugin the plugin
+	 * @return the commodore instance
+	 */
+	public static Commodore getCommodore(Plugin plugin) {
+		Objects.requireNonNull(plugin, "plugin");
+
+		if (!isSupported()) {
+			throw new RuntimeException("Brigadier is not supported by the server.");
 		}
+
+		return new CommodoreImpl(plugin);
 	}
 
-	public static String nms(String className) {
-		return "net.minecraft.server" + SERVER_VERSION + className;
+	private CommodoreProvider() {
+		throw new AssertionError();
 	}
-
-	public static Class<?> nmsClass(String className) throws ClassNotFoundException {
-		return Class.forName(nms(className));
-	}
-
-	public static String obc(String className) {
-		return "org.bukkit.craftbukkit" + SERVER_VERSION + className;
-	}
-
-	public static Class<?> obcClass(String className) throws ClassNotFoundException {
-		return Class.forName(obc(className));
-	}
-
-	private ReflectionUtil() {}
-
 }
