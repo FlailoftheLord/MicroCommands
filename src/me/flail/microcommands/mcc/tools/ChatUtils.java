@@ -47,7 +47,7 @@ public class ChatUtils {
 			String name = s.split(":")[0];
 			String integer = s.split(":")[1];
 
-			value = value.replaceAll(Pattern.quote("(?i)") + name, integer);
+			value = value.replaceAll("(?i)" + Pattern.quote(name), integer);
 		}
 
 		return value.replaceAll("[^0-9]", "");

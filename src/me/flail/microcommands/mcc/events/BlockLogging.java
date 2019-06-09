@@ -19,19 +19,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.entity.player.MicroPlayer;
-import me.flail.microcommands.mcc.io.FileManager;
+import me.flail.tools.DataFile;
 
 public class BlockLogging implements Listener {
 	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
-	private FileManager fileManager = new FileManager(plugin);
-
 	protected enum LoadType {
 		LOAD, SAVE;
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void blockPlace(BlockPlaceEvent event) {
-		event.setCancelled(this.logBlock(new MicroPlayer(event.getPlayer()), event.getBlock()));
+		event.setCancelled(this.logBlock(new MicroPlayer(event.getPlayer().getUniqueId()), event.getBlock()));
 	}
 
 	public void loader(LoadType dataType) {
@@ -55,11 +53,8 @@ public class BlockLogging implements Listener {
 		}
 	}
 
-	protected File setupDataFile(MicroPlayer player) {
-		String path = plugin.getDataFolder() + "/PlayerData/" + player.uuid().toString() + "/BlockData.mcc";
-		File file = new File(path);
-
-		return !file.exists() ? fileManager.create(file) : file;
+	protected DataFile setupDataFile(MicroPlayer player) {
+		return new DataFile("/PlayerData/" + player.uuid().toString() + "/BlockData.mcc");
 	}
 
 	@SuppressWarnings("unchecked")

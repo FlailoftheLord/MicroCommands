@@ -8,79 +8,45 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-
 import me.flail.microcommands.mcc.MicroCommands;
-import me.flail.microcommands.mcc.io.PlayerDataHandler;
 import me.flail.microcommands.mcc.modules.homes.Home;
 import me.flail.microcommands.mcc.modules.homes.HomeLocation;
+import me.flail.tools.DataFile;
+import me.flail.user.User;
 
-public class MicroPlayer extends AbstractMicroPlayer {
-	private FileConfiguration data;
+public class MicroPlayer extends User {
 
-	public MicroPlayer(OfflinePlayer player) {
-		super(player);
-		data = new PlayerDataHandler().player(this).get();
-	}
+	private DataFile data;
 
 	public MicroPlayer(UUID uuid) {
-		super(AbstractMicroPlayer.fromId(uuid));
-		data = new PlayerDataHandler().player(this).get();
-	}
-
-	public static MicroPlayer fromUuid(UUID uuid) {
-		OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-
-		return player.isOnline() ? new MicroPlayer(player.getPlayer()) : new MicroPlayer(uuid);
-	}
-
-	public UUID uuid() {
-		return player.getUniqueId();
-	}
-
-	@Override
-	public FileConfiguration getDataFile() {
-		return data;
-	}
-
-	public void saveDataFile(FileConfiguration config) {
-		fm.saveFile(config);
+		super(uuid);
+		data = getDataFile();
 	}
 
 	public Home getHome(String name) {
-		ConfigurationSection homeSection = getDataFile().getConfigurationSection("Homes").getConfigurationSection(name);
+		DataFile data = this.getDataFile();
+		String key = "Homes.Location";
 
-		HomeLocation location = new HomeLocation(name, plugin.server.getWorld(homeSection.get("Location.World").toString()),
-				homeSection.getInt("Location.X"), homeSection.getInt("Location.Y"), homeSection.getInt("Location.Z"),
-				homeSection.getInt("Location.Pitch"), homeSection.getInt("Location.Yaw"));
+		HomeLocation location = new HomeLocation(name, plugin.server.getWorld(data.getValue(key + ".World")),
+				data.getNumber(key + ".X"), data.getNumber(key + ".Y"), data.getNumber(key + ".Z"),
+				data.getNumber(key + ".Pitch"), data.getNumber(key + ".Yaw"));
 
 		return new Home(this, location);
 	}
 
-	@Override
 	public List<Home> getHomes() {
 
 		List<Home> list = new ArrayList<>();
 
-		if (getDataFile().contains("Homes")) {
-			ConfigurationSection homes = getDataFile().getConfigurationSection("Homes");
+		if (getDataFile().hasValue("Homes")) {
 
-			for (String name : homes.getKeys(false)) {
+			for (String name : data.keySet("Homes")) {
 				list.add(this.getHome(name));
 			}
 
 		}
 
 		return list;
-	}
-
-	@Override
-	public Player player() {
-		return player.getPlayer();
 	}
 
 	public static Map<UUID, File> playerDB() {
@@ -96,7 +62,7 @@ public class MicroPlayer extends AbstractMicroPlayer {
 		return db;
 	}
 
-	protected static File[] userDatabase() {
+	public static File[] userDatabase() {
 		File folder = new File(MicroCommands.instance.getDataFolder() + "/PlayerData/");
 		List<File> playerDataFiles = new ArrayList<>();
 		for (String name : folder.list()) {

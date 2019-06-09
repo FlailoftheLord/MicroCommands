@@ -5,16 +5,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.flail.microcommands.mcc.MicroCommands;
-import me.flail.microcommands.mcc.io.FileManager;
+import me.flail.tools.Logger;
 
-public class ChatFormatting {
+public class ChatFormatting extends Logger {
 
 	private MicroCommands plugin = JavaPlugin.getPlugin(MicroCommands.class);
-	private FileManager fm = plugin.fileManager;
 
 	public String chatFormat(Player player) {
 
-		String format = fm.config.get("ChatFormat").toString();
+		String format = plugin.config.get("ChatFormat").toString();
 
 		return format.replace("$player$", "%1$s").replace("$message$", "%2$s");
 

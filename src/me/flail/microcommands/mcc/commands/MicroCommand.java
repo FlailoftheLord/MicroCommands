@@ -15,8 +15,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 
 import me.flail.microcommands.mcc.MicroCommands;
-import me.flail.microcommands.mcc.me.lucko.commodore.Commodore;
-import me.flail.microcommands.mcc.me.lucko.commodore.CommodoreProvider;
+import me.lucko.commodore.Commodore;
+import me.lucko.commodore.CommodoreProvider;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class MicroCommand {

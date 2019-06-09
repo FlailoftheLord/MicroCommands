@@ -6,23 +6,20 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
-import me.flail.microcommands.io.Logger;
-import me.flail.microcommands.io.Logger.LogType;
 import me.flail.microcommands.mcc.commands.CommandProcessor;
 import me.flail.microcommands.mcc.entity.player.MicroPlayer;
-import me.flail.microcommands.mcc.io.FileManager;
-import me.flail.microcommands.mcc.io.ILogger;
 import me.flail.microcommands.mcc.tools.Tools;
+import me.flail.tools.DataFile;
+import me.flail.tools.Logger;
 
-public class BootManager {
+public class BootManager extends Logger {
 	private MicroCommands plugin = MicroCommands.instance;
 	public Server server = plugin.getServer();
 	public ConsoleCommandSender console = server.getConsoleSender();
-	public Logger logger = new ILogger();
+	public Logger logger = new Logger();
 	public Tools tools = new Tools();
 	public PluginManager pluginManager = server.getPluginManager();
 	public CommandProcessor commandControl = new CommandProcessor(plugin);
-	public FileManager fileManager = new FileManager(plugin);
 	private MicroManager manager = new MicroManager();
 
 	public boolean load() {
@@ -30,13 +27,12 @@ public class BootManager {
 		try {
 			plugin.console = console;
 			plugin.logger = logger;
-			plugin.fileManager = fileManager;
 			plugin.cmdControl = commandControl;
 			plugin.plugin = pluginManager;
 			plugin.serverName = server.getName();
 
+			plugin.saveDefaultConfig();
 			// Load up config and other resource files before the plugin is enabled.
-			fileManager.userDataFolder();
 			console.sendMessage("loaded player data folder");
 			this.loadExtraResources();
 			console.sendMessage("loaded configuration files.");
@@ -55,29 +51,28 @@ public class BootManager {
 		long startTime = System.currentTimeMillis();
 
 		manager.registerCommands();
-		logger.log("Loaded commands.", LogType.CONSOLE);
+		console("Loaded commands.");
 		manager.registerEvents();
-		logger.log("Events initiated.", LogType.CONSOLE);
+		console("Events initiated.");
 		this.loadPlayers();
-		logger.console("Player Database Loaded!");
+		console("Player Database Loaded!");
 
 		long endTime = System.currentTimeMillis();
 		double bootTime = (endTime - startTime);
-		logger.console("");
+		console("");
 		if (bootTime > 1000) {
-			logger.console("Startup finished in " + (bootTime / 1000) + "s\n");
+			console("Startup finished in " + (bootTime / 1000) + "s\n");
 			return;
 		}
 
-		logger.console("Startup finished in " + bootTime + "ms\n");
+		console("Startup finished in " + bootTime + "ms\n");
 
 	}
 
 	private void loadExtraResources() {
 
-		fileManager.loadFile("Commands");
-		fileManager.loadFile("ServerData");
-
+		new DataFile("Commands.yml").load();
+		new DataFile("ServerData.yml").load();
 	}
 
 	public void loadPlayers() {
@@ -87,7 +82,7 @@ public class BootManager {
 			plugin.offlinePlayers.putIfAbsent(player.getName().toLowerCase(), player.getUniqueId());
 		}
 		for (Player player : plugin.server.getOnlinePlayers()) {
-			plugin.playerDatabase.add(new MicroPlayer(player));
+			plugin.playerDatabase.add(new MicroPlayer(player.getUniqueId()));
 		}
 
 	}

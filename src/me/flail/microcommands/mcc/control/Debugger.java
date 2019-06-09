@@ -1,17 +1,16 @@
 package me.flail.microcommands.mcc.control;
 
-import me.flail.microcommands.io.Logger.LogType;
 import me.flail.microcommands.mcc.MicroCommands;
-import me.flail.microcommands.mcc.io.Locale.LocaleInit;
+import me.flail.microcommands.mcc.io.Locale.Message;
+import me.flail.tools.Logger;
 
-public class Debugger {
+public class Debugger extends Logger {
 
 	MicroCommands plugin = MicroCommands.instance;
 
 	public void run() {
-		LocaleInit locale = new LocaleInit(plugin);
 
-		plugin.logger.log(locale.readValue("Test"), LogType.CONSOLE);
+		console(new Message("Test").string());
 
 	}
 

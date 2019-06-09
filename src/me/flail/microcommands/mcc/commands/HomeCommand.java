@@ -2,17 +2,10 @@ package me.flail.microcommands.mcc.commands;
 
 import org.bukkit.command.CommandSender;
 
-import me.flail.microcommands.lang.Locale.Locale;
-import me.flail.microcommands.mcc.MicroCommands;
-import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.mcc.permissions.Permission;
-import me.flail.microcommands.mcc.tools.ChatUtils;
+import me.flail.tools.Logger;
 
-public class HomeCommand {
-
-	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
-	Locale locale = new Locale();
-	ChatUtils chat = new ChatUtils();
+public class HomeCommand extends Logger {
 
 	public boolean home(CommandSender sender, String alias, String[] args) {
 
@@ -51,7 +44,6 @@ public class HomeCommand {
 		if (args.length > 0) {
 			if (args.length > 1) {
 				if (operator.hasPermission(new Permission("home").node())) {
-					MicroPlayer subject = new MicroPlayer(plugin.offlinePlayers.get(args[0].toLowerCase()));
 
 				}
 

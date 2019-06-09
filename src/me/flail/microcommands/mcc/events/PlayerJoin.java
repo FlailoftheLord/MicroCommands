@@ -19,7 +19,7 @@ public class PlayerJoin implements Listener {
 	public void playerLogin(PlayerLoginEvent event) {
 		Player player = event.getPlayer();
 
-		tools.loadPlayer(new MicroPlayer(player));
+		tools.loadPlayer(new MicroPlayer(player.getUniqueId()));
 	}
 
 	@EventHandler
@@ -27,7 +27,7 @@ public class PlayerJoin implements Listener {
 		Player player = event.getPlayer();
 
 		if (player.hasPermission("microcommands.flyjoin")) {
-			MicroPlayer mPlayer = new MicroPlayer(player);
+			MicroPlayer mPlayer = new MicroPlayer(player.getUniqueId());
 			mPlayer.player().setFlying(!mPlayer.player().getAllowFlight());
 		}
 	}

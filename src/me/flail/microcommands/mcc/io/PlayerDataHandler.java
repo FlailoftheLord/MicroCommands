@@ -6,20 +6,17 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import me.flail.microcommands.io.Logger;
-import me.flail.microcommands.io.Logger.LogType;
 import me.flail.microcommands.io.PlayerData;
 import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.entity.player.MicroPlayer;
+import me.flail.tools.Logger;
 
-public class PlayerDataHandler implements PlayerData {
+public class PlayerDataHandler extends Logger implements PlayerData {
 
 	protected MicroCommands plugin = MicroCommands.instance;
 	String player = null;
 
 	private String path = plugin.getDataFolder() + "/PlayerData/";
-
-	Logger logger = new ILogger();
 
 	@Override
 	public PlayerData player(MicroPlayer player) {
@@ -45,7 +42,7 @@ public class PlayerDataHandler implements PlayerData {
 
 					return plugin.playerFile.get(player);
 				} catch (Throwable t) {
-					logger.log("Error getting player file for player: " + player, LogType.CONSOLE);
+					console("Error getting player file for player: " + player);
 					return playerConfig;
 				}
 

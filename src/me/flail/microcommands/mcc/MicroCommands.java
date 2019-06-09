@@ -23,12 +23,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.flail.microcommands.io.Logger;
 import me.flail.microcommands.mcc.commands.CommandProcessor;
 import me.flail.microcommands.mcc.entity.player.MicroPlayer;
-import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.mcc.tools.TabCompleter;
 import me.flail.microcommands.modules.MicroServer;
+import me.flail.tools.DataFile;
+import me.flail.tools.Logger;
+import me.flail.user.User;
 
 public class MicroCommands extends JavaPlugin {
 
@@ -40,13 +41,16 @@ public class MicroCommands extends JavaPlugin {
 	public Server server = new MicroServer(this).get();
 	public ConsoleCommandSender console = server.getConsoleSender();
 
-	public FileManager fileManager = new FileManager(this);
+	public DataFile config;
+	public DataFile messages = new DataFile("Messages.yml");
+
 	public Logger logger;
 
 	public PluginManager plugin;
 	public CommandProcessor cmdControl;
 
 	public Set<MicroPlayer> playerDatabase = new HashSet<>(32);
+	public Map<UUID, User> players = new HashMap<>(4);
 	public Map<String, UUID> offlinePlayers = new LinkedHashMap<>(256);
 	public Map<String, FileConfiguration> playerFile = new HashMap<>();
 	public List<Player> vanishedPlayers = new ArrayList<>();
@@ -61,6 +65,8 @@ public class MicroCommands extends JavaPlugin {
 	@Override
 	public void onLoad() {
 		instance = this;
+
+		config = new DataFile("config.yml");
 
 		boolean load = new BootManager().load();
 		if (!load) {

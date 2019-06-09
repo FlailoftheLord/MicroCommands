@@ -2,10 +2,9 @@ package me.flail.microcommands.mcc.modules.homes;
 
 import java.util.regex.Pattern;
 
-import org.bukkit.configuration.file.FileConfiguration;
-
 import me.flail.microcommands.mcc.entity.player.MicroPlayer;
 import me.flail.microcommands.modules.homes.MicroHome;
+import me.flail.tools.DataFile;
 
 /**
  * Note for plugin devs: use {@link Home} instead of accessing this class.
@@ -56,10 +55,10 @@ public abstract class AbstractHome implements MicroHome {
 
 	@Override
 	public boolean delete() {
-		FileConfiguration playerConfig = owner.getDataFile();
-		playerConfig.set(Pattern.quote("(?i)") + "Homes." + home.getName(), null);
+		DataFile playerConfig = owner.dataFile();
+		playerConfig.setValue(Pattern.compile("(?i)") + "Homes." + home.getName(), null);
 
-		return !playerConfig.contains(Pattern.quote("(?i)") + "Homes." + home.getName());
+		return !playerConfig.hasValue(Pattern.compile("(?i)") + "Homes." + home.getName());
 	}
 
 	/**
@@ -76,19 +75,18 @@ public abstract class AbstractHome implements MicroHome {
 	}
 
 	private boolean set(HomeLocation location, boolean overwrite) {
-		FileConfiguration playerConfig = owner.getDataFile();
+		DataFile playerData = owner.dataFile();
 
-		if (!overwrite && playerConfig.contains("Homes." + this.name())) {
+		if (!overwrite && playerData.hasValue("Homes." + this.name())) {
 			return false;
 		}
-		playerConfig.set("Homes." + this.name() + ".Location.World", location.getWorld().getName());
-		playerConfig.set("Homes." + this.name() + ".Location.X", location.getX());
-		playerConfig.set("Homes." + this.name() + ".Location.Y", location.getY());
-		playerConfig.set("Homes." + this.name() + ".Location.Z", location.getZ());
-		playerConfig.set("Homes." + this.name() + ".Location.Pitch", location.getPitch());
-		playerConfig.set("Homes." + this.name() + ".Location.Yaw", location.getYaw());
+		playerData.setValue("Homes." + this.name() + ".Location.World", location.getWorld().getName());
+		playerData.setValue("Homes." + this.name() + ".Location.X", location.getX());
+		playerData.setValue("Homes." + this.name() + ".Location.Y", location.getY());
+		playerData.setValue("Homes." + this.name() + ".Location.Z", location.getZ());
+		playerData.setValue("Homes." + this.name() + ".Location.Pitch", location.getPitch());
+		playerData.setValue("Homes." + this.name() + ".Location.Yaw", location.getYaw());
 
-		owner.saveDataFile(playerConfig);
 		return true;
 	}
 

@@ -2,12 +2,12 @@
 name: MicroCommands
 prefix: M.C.C
 author: FlailoftheLord
-description: Every essential command your server will ever need :>
+description: Every feature your server will ever need :>
 
 # Me mum always told me i could do great things... MicroCommands is great?? o.O
 main: me.flail.microcommands.mcc.MicroCommands
 version: 1.0.0
-api-version: 1.13
+api-version: 1.14
 load: STARTUP
 
 # Just bcuz

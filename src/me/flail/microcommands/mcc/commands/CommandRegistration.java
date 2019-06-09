@@ -5,27 +5,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
 import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.MicroManager;
-import me.flail.microcommands.mcc.io.FileManager;
 import me.flail.microcommands.mcc.tools.ChatUtils;
+import me.flail.tools.DataFile;
 
 public class CommandRegistration {
 	MicroCommands plugin = MicroCommands.instance;
-	private FileManager fileManager = new FileManager(plugin);
+
+	private DataFile cmdFile;
+
+	public CommandRegistration() {
+		cmdFile = new DataFile("Commands.yml");
+	}
 
 	public PluginCommand[] getCommands() {
-		ConfigurationSection commands = fileManager.getFile("Commands.yml").getConfigurationSection("Commands");
 		List<PluginCommand> list = new ArrayList<>();
 
-		if (commands != null) {
-
-			for (String command : commands.getKeys(false)) {
-				list.add(this.command(command, plugin));
-			}
+		for (String command : cmdFile.keySet()) {
+			list.add(this.command("Commands." + command, plugin));
 		}
 
 		return list.toArray(new PluginCommand[] {});
@@ -33,19 +33,18 @@ public class CommandRegistration {
 
 	public void loadCommandsFromFile() {
 		ChatUtils chat = new ChatUtils();
-		ConfigurationSection commands = fileManager.getFile("Commands.yml").getConfigurationSection("Commands");
 
 		for (PluginCommand cmd : (getCommands() != null) ? getCommands() : new PluginCommand[] {}) {
-			String command = cmd.getName();
+			String command = "Commands." + cmd.getName();
 
-			List<String> aliases = commands.getStringList(command + ".aliases");
+			List<String> aliases = cmdFile.getList(command + ".aliases");
 			List<String> args = new ArrayList<>();
-			String description = commands.get(command + ".description", "").toString();
+			String description = cmdFile.getValue(command + ".description");
 
-			String permission = commands.get(command + ".permission", "").toString();
-			String permMessage = commands.get(command + ".no-permission", "$no-permission$").toString();
+			String permission = cmdFile.getValue(command + ".permission");
+			String permMessage = cmdFile.getValue(command + ".no-permission");
 
-			for (String arg : commands.get(command + ".usage", "/" + command + " <args>").toString().split(" ")) {
+			for (String arg : cmdFile.getValue(command + ".usage").split(" ")) {
 				args.add(arg);
 			}
 
@@ -54,8 +53,7 @@ public class CommandRegistration {
 			cmd.setPermissionMessage(permMessage);
 			cmd.setAliases(aliases);
 			cmd.setLabel(command);
-			cmd.setUsage(chat.chat(commands.get(command + ".usage", "/" + command + " <args>").toString()
-					.replace("$command$", command)));
+			cmd.setUsage(chat.chat(cmdFile.getValue(command + ".usage").replace("$command$", command)));
 
 			cmd.setExecutor(plugin);
 			cmd.setTabCompleter(plugin);

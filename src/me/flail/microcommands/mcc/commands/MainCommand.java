@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 import me.flail.microcommands.mcc.MicroCommands;
 import me.flail.microcommands.mcc.control.Debugger;
-import me.flail.microcommands.mcc.io.FileManager;
+import me.flail.microcommands.mcc.io.Locale.Message;
 import me.flail.microcommands.mcc.tools.ChatUtils;
 import me.flail.microcommands.mcc.tools.Tools;
 
@@ -13,7 +13,6 @@ import me.flail.microcommands.mcc.tools.Tools;
 public class MainCommand {
 
 	private MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
-	private FileManager fm = plugin.fileManager;
 	private Tools tools = new Tools();
 
 	public void mcc(CommandSender sender, String command, String[] args) {
@@ -33,7 +32,7 @@ public class MainCommand {
 
 		switch (args.length) {
 		case 0:
-			sender.sendMessage(chat.chat(fm.getMessage("About").replace("$server$", serverString)));
+			sender.sendMessage(chat.chat(new Message("About").string().replace("$server$", serverString)));
 			break;
 		case 1:
 			String first = args[0].toLowerCase();
