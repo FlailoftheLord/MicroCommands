@@ -5,7 +5,7 @@ author: FlailoftheLord
 description: Every feature your server will ever need :>
 
 # Me mum always told me i could do great things... MicroCommands is great?? o.O
-main: me.flail.microcommands.mcc.MicroCommands
+main: me.flail.oldmcc.mcc.MicroCommands
 version: 1.0.0
 api-version: 1.14
 load: STARTUP

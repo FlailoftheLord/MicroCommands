@@ -39,7 +39,7 @@ public class Logger extends Tools {
 			File logFile = new File(plugin.getDataFolder() + "/logs/" + timeLog + ".txt");
 			if (!logFile.exists()) {
 				logFile.createNewFile();
-
+				logFile.mkdirs();
 			}
 
 

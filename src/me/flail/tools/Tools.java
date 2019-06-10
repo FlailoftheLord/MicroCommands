@@ -5,13 +5,16 @@ import java.util.regex.Pattern;
 
 import org.bukkit.ChatColor;
 
-import me.flail.microcommands.mcc.MicroCommands;
+import me.flail.mcc.MicroCommands;
 
 public class Tools {
-	protected MicroCommands plugin = MicroCommands.getPlugin(MicroCommands.class);
+	protected MicroCommands plugin = MicroCommands.mcc;
 
 	public String chat(String message) {
-		return ChatColor.translateAlternateColorCodes('&', message);
+		if ((message == null)) {
+			message = "&4ERROR&8: &cMessage not found!";
+		}
+		return ChatColor.translateAlternateColorCodes('&', message.toString());
 	}
 
 	/**

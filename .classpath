@@ -7,6 +7,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SpigotPlugins"/>
+	<classpathentry kind="lib" path="C:/Users/FlailoftheLord/Desktop/Minecraft/Spigot Plugins/Vault-1.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import me.flail.microcommands.mcc.MicroCommands;
-import me.flail.microcommands.mcc.io.Locale.Message;
+import me.flail.oldmcc.mcc.MicroCommands;
 import me.flail.tools.DataFile;
 import me.flail.tools.Logger;
+import me.flail.tools.Message;
 import me.flail.tools.Time;
 
 public class UserData extends Logger {

@@ -16,8 +16,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 
-import me.flail.microcommands.mcc.io.Locale.Message;
 import me.flail.tools.DataFile;
+import me.flail.tools.Message;
 import me.flail.tools.Time;
 
 /**
