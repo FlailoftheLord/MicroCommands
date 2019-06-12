@@ -21,7 +21,7 @@ Commands:
     
   home:
     usage: '/$command$ <home-name:player> [home-name]'
-    description: 'Create, modify and delete homes for players!'
+    description: 'Create, modify and delete homes for players!'W
     permission: microcommands.home
     no-permission: '$prefix$ &cYou don''t have permission for &7$permission$'
     aliases:
